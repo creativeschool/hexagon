@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "fastify": "^2.6.0",
+    "fastify-plugin": "^1.6.0",
     "mongodb": "^3.2.7"
   },
   "scripts": {

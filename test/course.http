@@ -1,0 +1,8 @@
+### Sync
+POST http://localhost:3000/course/sync HTTP/1.1
+Content-Type: application/json
+
+{
+  "id": "5d26ee56b39455e08cf1c428",
+  "last": 0
+}
