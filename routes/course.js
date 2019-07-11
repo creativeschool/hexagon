@@ -1,8 +1,7 @@
-const { ObjectID } = require('mongodb')
 const { syncCourse } = require('../schemas')
 
 /**
- * @param {import('fastify').FastifyInstance<Server, IncomingMessage, ServerResponse>} server
+ * @param {import('fastify').FastifyInstance} server
  * @param {any} opts
  */
 module.exports = async (server, opts) => {
@@ -13,15 +12,15 @@ module.exports = async (server, opts) => {
 
   server.post('/sync', { schema: syncCourse }, async (req) => {
     return userCourse.aggregate([
-      { $match: { user: new ObjectID(req.body.id) } },
+      { $match: { user: req._id } },
       { $lookup: { from: 'courses', localField: 'course', foreignField: '_id', as: 'course' } },
       { $unwind: '$course' },
       { $match: { 'course.updated': { $gt: req.body.last } } },
-      { $project: { _id: false, user: false } }
+      { $project: { _id: 0, user: 0 } }
     ]).toArray()
   })
 
   server.get('/list', async (req) => {
-    return courses.find()
+    return courses.find().toArray()
   })
 }
