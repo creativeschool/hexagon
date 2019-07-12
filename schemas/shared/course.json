@@ -10,10 +10,10 @@
       "type": "string"
     },
     "created": {
-      "type": "number"
+      "type": "string"
     },
     "updated": {
-      "type": "number"
+      "type": "string"
     },
     "priv": {
       "$ref": "http://hex.zhangzisu.cn/priv.json#"

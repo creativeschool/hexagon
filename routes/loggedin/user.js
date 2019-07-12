@@ -1,5 +1,5 @@
 const { pbkdf2Sync, randomBytes } = require('crypto')
-const { syncUser, changePass, changeProf } = require('../../schemas')
+const { userSync, userPassChange, userProfChange } = require('../../schemas')
 
 /**
  * @param {import('fastify').FastifyInstance} server
@@ -13,7 +13,7 @@ module.exports = async (server, opts) => {
   /** @type {import('mongodb').Collection} */
   const userCourse = server.db.collection('user_course')
 
-  server.post('/sync', { schema: syncUser }, async (req) => {
+  server.post('/sync', { schema: userSync }, async (req) => {
     return userCourse.aggregate([
       { $match: { user: req.userId } },
       { $lookup: { from: 'user_course', localField: 'course', foreignField: 'course', as: 'link' } },
@@ -26,7 +26,7 @@ module.exports = async (server, opts) => {
     ]).toArray()
   })
 
-  server.post('/pass', { schema: changePass }, async (req) => {
+  server.post('/pass', { schema: userPassChange }, async (req) => {
     const user = await users.findOne({ _id: req.userId }, { _id: 0, hash: 1, salt: 1 })
     const hash = pbkdf2Sync(req.body.old, user.salt, 1000, 64, 'sha512').toString('hex')
     if (hash !== user.hash) throw server.httpErrors.forbidden()
@@ -37,7 +37,7 @@ module.exports = async (server, opts) => {
     return token
   })
 
-  server.post('/prof', { schema: changeProf }, async (req) => {
+  server.post('/prof', { schema: userProfChange }, async (req) => {
     await users.updateOne({ _id: req.userId }, { $set: req.body, $currentDate: { updated: true } })
     return true
   })

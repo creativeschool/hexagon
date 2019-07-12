@@ -1,5 +1,5 @@
 const { ObjectId } = require('mongodb')
-const { syncFile } = require('../../../schemas')
+const { fileSync, fileNew, fileMove, fileMetaUpdate } = require('../../../schemas')
 
 /**
 * @param {import('fastify').FastifyInstance} server
@@ -9,11 +9,11 @@ module.exports = async (server, opts) => {
   /** @type {import('mongodb').Collection} */
   const files = server.db.collection('files')
 
-  server.post('/sync', { schema: syncFile }, async (req) => {
+  server.post('/sync', { schema: fileSync }, async (req) => {
     return files.find({ course: req.course, updated: { $gt: req.body.last } }).toArray()
   })
 
-  const bodyScope = (req) => {
+  const preCheck = async (req) => {
     if (!req.body.path.startsWith(req.priv.scope)) throw server.httpErrors.forbidden()
   }
 
@@ -25,21 +25,20 @@ module.exports = async (server, opts) => {
     return _id
   }
 
-  server.post('/new', async (req) => {
-    bodyScope(req)
+  server.post('/new', { schema: fileNew, preHandler: preCheck }, async (req) => {
     const now = new Date()
     const result = await files.insertOne({ course: req.course, path: req.body.path, tags: req.body.tags, created: now, updated: now, versions: {} })
     return result.insertedId
   })
 
-  server.post('/move', async (req) => {
-    bodyScope(req)
+  server.post('/move', { schema: fileMove, preHandler: preCheck }, async (req) => {
     await files.updateOne({ _id: await fileScope(req) }, { $set: { path: req.body.path }, $currentDate: { updated: true } })
     return true
   })
 
-  server.post('/meta', async (req) => {
+  server.post('/meta', { schema: fileMetaUpdate }, async (req) => {
     await files.updateOne({ _id: await fileScope(req) }, { $set: req.body, $currentDate: { updated: true } })
+    return true
   })
 
   server.post('/version', async (req) => {
