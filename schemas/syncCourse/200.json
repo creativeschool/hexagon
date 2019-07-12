@@ -17,8 +17,7 @@
         "type": "number"
       },
       "priv": {
-        "type": "object",
-        "properties": {}
+        "$ref": "http://hex.zhangzisu.cn/priv.json"
       }
     }
   }
