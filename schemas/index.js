@@ -1,5 +1,6 @@
 const fs = require('fs')
 const path = require('path')
+const chalk = require('chalk')
 
 const special = ['body.json', 'querystring.json', 'params.json', 'headers.json']
 
@@ -14,7 +15,7 @@ function loadSchema (fullpath) {
 fs.readdirSync(__dirname).filter(x => x !== 'shared').forEach(name => {
   const fullpath = path.join(__dirname, name)
   if (fs.statSync(fullpath).isDirectory()) {
-    console.log(`Loading schema for ${name}`)
+    console.log(chalk.bgRed.black('SCHEMA') + '\t' + chalk.underline(name))
     exports[name] = loadSchema(fullpath)
   }
 })

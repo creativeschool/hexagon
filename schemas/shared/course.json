@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://hex.zhangzisu.cn/course.json",
+  "type": "object",
+  "properties": {
+    "_id": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "created": {
+      "type": "number"
+    },
+    "updated": {
+      "type": "number"
+    },
+    "priv": {
+      "$ref": "http://hex.zhangzisu.cn/priv.json#"
+    }
+  }
+}
