@@ -8,8 +8,8 @@ module.exports = async (server, opts) => {
 
   server.addHook('preHandler', async (req) => {
     const token = await tokens.findOne({ _id: req.headers['x-access-token'] })
-    if (!token) throw server.httpErrors.notFound()
-    req._id = token.user
+    if (!token) throw server.httpErrors.forbidden()
+    req.userId = token.user
   })
   server.register(require('./user'), { prefix: '/user' })
   server.register(require('./course'), { prefix: '/course' })

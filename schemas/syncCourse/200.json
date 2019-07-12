@@ -4,22 +4,21 @@
   "items": {
     "type": "object",
     "properties": {
-      "course": {
+      "_id": {
+        "type": "string"
+      },
+      "name": {
+        "type": "string"
+      },
+      "created": {
+        "type": "number"
+      },
+      "updated": {
+        "type": "number"
+      },
+      "priv": {
         "type": "object",
-        "properties": {
-          "_id": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "created": {
-            "type": "number"
-          },
-          "updated": {
-            "type": "number"
-          }
-        }
+        "properties": {}
       }
     }
   }

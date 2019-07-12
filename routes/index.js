@@ -12,7 +12,7 @@ module.exports = async (server, opts) => {
   const tokens = server.db.collection('tokens')
 
   server.post('/login', { schema: login }, async (req) => {
-    const user = await users.findOne({ name: req.body.name })
+    const user = await users.findOne({ name: req.body.name }, { salt: 1, hash: 1 })
     if (!user) throw server.httpErrors.notFound()
 
     const hash = pbkdf2Sync(req.body.pass, user.salt, 1000, 64, 'sha512').toString('hex')
@@ -22,5 +22,5 @@ module.exports = async (server, opts) => {
     await tokens.insertOne({ _id: token, user: user._id })
     return token
   })
-  server.register(require('./protect'))
+  server.register(require('./loggedin'))
 }

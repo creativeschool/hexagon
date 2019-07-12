@@ -1,0 +1,10 @@
+{
+  "rest-client.environmentVariables": {
+    "$shared": {},
+    "local": {
+      "base": "http://localhost:3000",
+      "token": "a5fc32209772651b711da0c195064b75063b042367e09fe82ca724e37c4d0701"
+    }
+  },
+  "eslint.autoFixOnSave": true
+}

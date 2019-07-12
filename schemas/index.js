@@ -11,7 +11,7 @@ function loadSchema (fullpath) {
   return schema
 }
 
-fs.readdirSync(__dirname).forEach(name => {
+fs.readdirSync(__dirname).filter(x => x !== 'shared').forEach(name => {
   const fullpath = path.join(__dirname, name)
   if (fs.statSync(fullpath).isDirectory()) {
     console.log(`Loading schema for ${name}`)

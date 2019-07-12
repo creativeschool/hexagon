@@ -1,4 +1,4 @@
-const { syncCourse } = require('../schemas')
+const { syncCourse } = require('../../schemas')
 
 /**
  * @param {import('fastify').FastifyInstance} server
@@ -12,11 +12,12 @@ module.exports = async (server, opts) => {
 
   server.post('/sync', { schema: syncCourse }, async (req) => {
     return userCourse.aggregate([
-      { $match: { user: req._id } },
+      { $match: { user: req.userId } },
       { $lookup: { from: 'courses', localField: 'course', foreignField: '_id', as: 'course' } },
       { $unwind: '$course' },
       { $match: { 'course.updated': { $gt: req.body.last } } },
-      { $project: { _id: 0, user: 0 } }
+      { $addFields: { 'course.priv': '$priv' } },
+      { $replaceRoot: { newRoot: '$course' } }
     ]).toArray()
   })
 

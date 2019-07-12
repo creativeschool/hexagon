@@ -1,5 +1,5 @@
 const { pbkdf2Sync, randomBytes } = require('crypto')
-const { syncUser, changePass } = require('../schemas')
+const { syncUser, changePass, changeProf } = require('../../schemas')
 
 /**
  * @param {import('fastify').FastifyInstance} server
@@ -15,26 +15,30 @@ module.exports = async (server, opts) => {
 
   server.post('/sync', { schema: syncUser }, async (req) => {
     return userCourse.aggregate([
-      { $match: { user: req._id } },
+      { $match: { user: req.userId } },
       { $lookup: { from: 'user_course', localField: 'course', foreignField: 'course', as: 'link' } },
       { $unwind: '$link' },
       { $group: { _id: '$link.user' } },
       { $lookup: { from: 'users', localField: '_id', foreignField: '_id', as: 'user' } },
       { $unwind: '$user' },
-      { $replaceRoot: { newRoot: '$user' } },
-      { $match: { 'updated': { $gt: req.body.last } } }
+      { $match: { 'user.updated': { $gt: req.body.last } } },
+      { $replaceRoot: { newRoot: '$user' } }
     ]).toArray()
   })
 
   server.post('/pass', { schema: changePass }, async (req) => {
-    const user = await users.findOne({ _id: req._id }, { _id: 0, hash: 1, salt: 1 })
+    const user = await users.findOne({ _id: req.userId }, { _id: 0, hash: 1, salt: 1 })
     const hash = pbkdf2Sync(req.body.pass, user.salt, 1000, 64, 'sha512').toString('hex')
-    if (hash !== user.hash) throw new Error('Wrong password')
-    await users.updateOne({ _id: req._id }, { $set: { hash: pbkdf2Sync(req.body.newpass, user.salt, 1000, 64, 'sha512').toString('hex') } })
-    await tokens.deleteMany({ user: req._id })
+    if (hash !== user.hash) throw server.httpErrors.forbidden()
+    await users.updateOne({ _id: req.userId }, { $set: { hash: pbkdf2Sync(req.body.newpass, user.salt, 1000, 64, 'sha512').toString('hex') } })
+    await tokens.deleteMany({ user: req.userId })
     const token = randomBytes(32).toString('hex')
-    await tokens.insertOne({ _id: token, user: req._id })
+    await tokens.insertOne({ _id: token, user: req.userId })
     return token
+  })
+
+  server.post('/prof', { schema: changeProf }, async (req) => {
+    await users.updateOne({ _id: req.userId }, { $set: req.body })
   })
 
   server.get('/list', async (req) => {

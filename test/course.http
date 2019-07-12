@@ -1,6 +1,7 @@
 ### Sync
-POST http://localhost:3000/course/sync HTTP/1.1
+POST {{base}}/course/sync HTTP/1.1
 Content-Type: application/json
+x-access-token: {{token}}
 
 {
   "id": "5d26ee56b39455e08cf1c428",
