@@ -17,7 +17,7 @@
         "type": "number"
       },
       "priv": {
-        "$ref": "http://hex.zhangzisu.cn/priv.json"
+        "$ref": "http://hex.zhangzisu.cn/priv.json#"
       }
     }
   }

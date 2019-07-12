@@ -18,7 +18,15 @@ Content-Type: application/json
 x-access-token: {{token}}
 
 {
-  "id": "5d26ee56b39455e08cf1c428",
-  "pass": "123456",
-  "newpass": "123456"
+  "old": "123456",
+  "new": "123456"
+}
+
+### profile
+POST {{base}}/user/prof HTTP/1.1
+Content-Type: application/json
+x-access-token: {{token}}
+
+{
+  "email": "admin@zhangzisu.cn"
 }

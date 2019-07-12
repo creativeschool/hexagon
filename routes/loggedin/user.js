@@ -28,9 +28,9 @@ module.exports = async (server, opts) => {
 
   server.post('/pass', { schema: changePass }, async (req) => {
     const user = await users.findOne({ _id: req.userId }, { _id: 0, hash: 1, salt: 1 })
-    const hash = pbkdf2Sync(req.body.pass, user.salt, 1000, 64, 'sha512').toString('hex')
+    const hash = pbkdf2Sync(req.body.old, user.salt, 1000, 64, 'sha512').toString('hex')
     if (hash !== user.hash) throw server.httpErrors.forbidden()
-    await users.updateOne({ _id: req.userId }, { $set: { hash: pbkdf2Sync(req.body.newpass, user.salt, 1000, 64, 'sha512').toString('hex') } })
+    await users.updateOne({ _id: req.userId }, { $set: { hash: pbkdf2Sync(req.body.new, user.salt, 1000, 64, 'sha512').toString('hex') } })
     await tokens.deleteMany({ user: req.userId })
     const token = randomBytes(32).toString('hex')
     await tokens.insertOne({ _id: token, user: req.userId })
@@ -38,7 +38,8 @@ module.exports = async (server, opts) => {
   })
 
   server.post('/prof', { schema: changeProf }, async (req) => {
-    await users.updateOne({ _id: req.userId }, { $set: req.body })
+    await users.updateOne({ _id: req.userId }, { $set: req.body, $currentDate: { updated: true } })
+    return true
   })
 
   server.get('/list', async (req) => {

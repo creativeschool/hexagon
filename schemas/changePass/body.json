@@ -8,5 +8,9 @@
     "new": {
       "type": "string"
     }
-  }
+  },
+  "required": [
+    "old",
+    "new"
+  ]
 }
