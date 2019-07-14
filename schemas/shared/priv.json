@@ -3,8 +3,11 @@
   "$id": "http://hex.zhangzisu.cn/priv.json",
   "type": "object",
   "properties": {
-    "test": {
-      "type": "number"
+    "scope": {
+      "type": "string"
+    },
+    "msg": {
+      "type": "boolean"
     }
   }
 }
