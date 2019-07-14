@@ -6,14 +6,15 @@ const { ObjectId } = require('mongodb')
 */
 module.exports = async (server, opts) => {
   /** @type {import('mongodb').Collection} */
-  const userCourse = server.db.collection('user_course')
+  const userCourse = server.userCourse
 
   server.addHook('preHandler', async (req) => {
-    const mapper = await userCourse.findOne({ user: req.userId, course: new ObjectId(req.headers['x-course-id']) })
+    const mapper = await userCourse.findOne({ user: req.user, course: new ObjectId(req.headers['x-course-id']) })
     if (!mapper) throw server.httpErrors.forbidden()
     req.course = mapper.course
     req.priv = mapper.priv
   })
 
   server.register(require('./file'), { prefix: '/file' })
+  server.register(require('./msg'), { prefix: '/msg' })
 }

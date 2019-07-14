@@ -4,7 +4,6 @@ Content-Type: application/json
 x-access-token: {{token}}
 
 {
-  "ids": ["5d26ee56b39455e08cf1c428"],
   "last": 0
 }
 

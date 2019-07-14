@@ -1,7 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
-  "$id": "http://hex.zhangzisu.cn/file.json",
-  "type": "object",
+  "$id": "http://hex.zhangzisu.cn/msg.json",
   "properties": {
     "_id": {
       "type": "string"
@@ -9,19 +8,11 @@
     "course": {
       "type": "string"
     },
-    "path": {
+    "user": {
       "type": "string"
     },
-    "versions": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          }
-        }
-      }
+    "content": {
+      "type": "string"
     },
     "tags": {
       "type": "array",

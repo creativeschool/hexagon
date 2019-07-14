@@ -6,16 +6,16 @@ const { courseSync } = require('../../schemas')
  */
 module.exports = async (server, opts) => {
   /** @type {import('mongodb').Collection} */
-  const courses = server.db.collection('courses')
+  const courses = server.courses
   /** @type {import('mongodb').Collection} */
-  const userCourse = server.db.collection('user_course')
+  const userCourse = server.userCourse
 
   server.post('/sync', { schema: courseSync }, async (req) => {
     return userCourse.aggregate([
-      { $match: { user: req.userId } },
+      { $match: { user: req.user } },
       { $lookup: { from: 'courses', localField: 'course', foreignField: '_id', as: 'course' } },
       { $unwind: '$course' },
-      { $match: { 'course.updated': { $gt: req.body.last } } },
+      { $match: { 'course.updated': { $gt: new Date(req.body.last) } } },
       { $addFields: { 'course.priv': '$priv' } },
       { $replaceRoot: { newRoot: '$course' } }
     ]).toArray()

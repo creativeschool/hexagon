@@ -7,9 +7,9 @@ const { login } = require('../schemas')
  */
 module.exports = async (server, opts) => {
   /** @type {import('mongodb').Collection} */
-  const users = server.db.collection('users')
+  const users = server.users
   /** @type {import('mongodb').Collection} */
-  const tokens = server.db.collection('tokens')
+  const tokens = server.tokens
 
   server.post('/login', { schema: login }, async (req) => {
     const user = await users.findOne({ name: req.body.name }, { salt: 1, hash: 1 })

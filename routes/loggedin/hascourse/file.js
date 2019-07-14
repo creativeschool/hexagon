@@ -1,5 +1,5 @@
 const { ObjectId } = require('mongodb')
-const { fileSync, fileNew, fileMove, fileMetaUpdate } = require('../../../schemas')
+const { fileSync, fileNew, fileUpdate } = require('../../../schemas')
 
 /**
 * @param {import('fastify').FastifyInstance} server
@@ -7,41 +7,34 @@ const { fileSync, fileNew, fileMove, fileMetaUpdate } = require('../../../schema
 */
 module.exports = async (server, opts) => {
   /** @type {import('mongodb').Collection} */
-  const files = server.db.collection('files')
+  const files = server.files
 
   server.post('/sync', { schema: fileSync }, async (req) => {
-    return files.find({ course: req.course, updated: { $gt: req.body.last } }).toArray()
+    return files.find({ course: req.course, updated: { $gt: new Date(req.body.last) } }).toArray()
   })
 
-  const preCheck = async (req) => {
-    if (!req.body.path.startsWith(req.priv.scope)) throw server.httpErrors.forbidden()
-  }
+  server.post('/new', { schema: fileNew }, async (req) => {
+    if (!req.priv.scope || !req.body.path.startsWith(req.priv.scope)) throw server.httpErrors.forbidden()
+    req.body.course = req.course
+    req.body.created = req.body.updated = new Date()
+    const result = await files.insertOne(req.body)
+    return result.insertedId
+  })
 
-  const fileScope = async (req) => {
+  server.post('/update', { schema: fileUpdate }, async (req) => {
+    if (!req.priv.scope || (req.body.path && !req.body.path.startsWith(req.priv.scope))) throw server.httpErrors.forbidden()
     const _id = new ObjectId(req.headers['x-file-id'])
     const file = await files.findOne({ _id }, { _id: 0, course: 1, path: 1 })
     if (!file) throw server.httpErrors.notFound()
     if (!file.course.equals(req.course) || !file.path.startsWith(req.priv.scope)) throw server.httpErrors.forbidden()
-    return _id
-  }
-
-  server.post('/new', { schema: fileNew, preHandler: preCheck }, async (req) => {
-    const now = new Date()
-    const result = await files.insertOne({ course: req.course, path: req.body.path, tags: req.body.tags, created: now, updated: now, versions: {} })
-    return result.insertedId
-  })
-
-  server.post('/move', { schema: fileMove, preHandler: preCheck }, async (req) => {
-    await files.updateOne({ _id: await fileScope(req) }, { $set: { path: req.body.path }, $currentDate: { updated: true } })
+    await files.updateOne({ _id }, { $set: req.body, $currentDate: { updated: true } })
     return true
   })
 
-  server.post('/meta', { schema: fileMetaUpdate }, async (req) => {
-    await files.updateOne({ _id: await fileScope(req) }, { $set: req.body, $currentDate: { updated: true } })
-    return true
-  })
-
-  server.post('/version', async (req) => {
-    //
-  })
+  // @todo Cannot sync problems. 7/14/2019
+  // For the same reason, message cannot be remove too.
+  // server.post('/remove', { schema: fileRemove }, async (req) => {
+  //   await files.deleteOne({ _id: await fileScope(req) })
+  //   return true
+  // })
 }

@@ -4,13 +4,14 @@
  */
 module.exports = async (server, opts) => {
   /** @type {import('mongodb').Collection} */
-  const tokens = server.db.collection('tokens')
+  const tokens = server.tokens
 
   server.addHook('preHandler', async (req) => {
     const token = await tokens.findOne({ _id: req.headers['x-access-token'] })
     if (!token) throw server.httpErrors.forbidden()
-    req.userId = token.user
+    req.user = token.user
   })
   server.register(require('./user'), { prefix: '/user' })
   server.register(require('./course'), { prefix: '/course' })
+  server.register(require('./hascourse'))
 }
