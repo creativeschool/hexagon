@@ -21,7 +21,7 @@ module.exports = async (server, opts) => {
       { $group: { _id: '$link.user' } },
       { $lookup: { from: 'users', localField: '_id', foreignField: '_id', as: 'user' } },
       { $unwind: '$user' },
-      { $match: { 'user.updated': { $gt: new Date(req.body.last) } } },
+      { $match: { 'user.updated': { $gt: req.body.last } } },
       { $replaceRoot: { newRoot: '$user' } }
     ]).toArray()
   })
@@ -38,7 +38,8 @@ module.exports = async (server, opts) => {
   })
 
   server.post('/update', { schema: userUpdate }, async (req) => {
-    await users.updateOne({ _id: req.user }, { $set: req.body, $currentDate: { updated: true } })
+    req.body.updated = +new Date()
+    await users.updateOne({ _id: req.user }, { $set: req.body })
     return true
   })
 }

@@ -21,10 +21,10 @@
       }
     },
     "created": {
-      "type": "string"
+      "type": "number"
     },
     "updated": {
-      "type": "string"
+      "type": "number"
     }
   }
 }

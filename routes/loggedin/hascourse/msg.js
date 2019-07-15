@@ -10,14 +10,14 @@ module.exports = async (server, opts) => {
   const msgs = server.msgs
 
   server.post('/sync', { schema: msgSync }, async (req) => {
-    return msgs.find({ course: req.course, updated: { $gt: new Date(req.body.last) } }).toArray()
+    return msgs.find({ course: req.course, updated: { $gt: req.body.last } }).toArray()
   })
 
   server.post('/new', { schema: msgNew }, async (req) => {
     if (!req.priv.msg) throw server.httpErrors.forbidden()
     req.body.course = req.course
     req.body.user = req.user
-    req.body.created = req.body.updated = new Date()
+    req.body.created = req.body.updated = +new Date()
     const result = await msgs.insertOne(req.body)
     return result.insertedId
   })
@@ -28,7 +28,8 @@ module.exports = async (server, opts) => {
     const msg = await msgs.findOne({ _id }, { _id: 0, course: 1, user: 1 })
     if (!msg) throw server.httpErrors.notFound()
     if (!msg.course.equals(req.course) || (!msg.user.equals(req.user))) throw server.httpErrors.forbidden()
-    await msgs.updateOne({ _id }, { $set: req.body, $currentDate: { updated: true } })
+    req.body.updated = +new Date()
+    await msgs.updateOne({ _id }, { $set: req.body })
     return true
   })
 }

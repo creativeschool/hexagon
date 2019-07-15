@@ -13,7 +13,7 @@ module.exports = async (server, opts) => {
       { $match: { user: req.user } },
       { $lookup: { from: 'courses', localField: 'course', foreignField: '_id', as: 'course' } },
       { $unwind: '$course' },
-      { $match: { 'course.updated': { $gt: new Date(req.body.last) } } },
+      { $match: { 'course.updated': { $gt: req.body.last } } },
       { $addFields: { 'course.priv': '$priv' } },
       { $replaceRoot: { newRoot: '$course' } }
     ]).toArray()

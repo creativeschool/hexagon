@@ -10,13 +10,13 @@ module.exports = async (server, opts) => {
   const files = server.files
 
   server.post('/sync', { schema: fileSync }, async (req) => {
-    return files.find({ course: req.course, updated: { $gt: new Date(req.body.last) } }).toArray()
+    return files.find({ course: req.course, updated: { $gt: req.body.last } }).toArray()
   })
 
   server.post('/new', { schema: fileNew }, async (req) => {
     if (!req.priv.scope || !req.body.path.startsWith(req.priv.scope)) throw server.httpErrors.forbidden()
     req.body.course = req.course
-    req.body.created = req.body.updated = new Date()
+    req.body.created = req.body.updated = +new Date()
     const result = await files.insertOne(req.body)
     return result.insertedId
   })
@@ -27,7 +27,8 @@ module.exports = async (server, opts) => {
     const file = await files.findOne({ _id }, { _id: 0, course: 1, path: 1 })
     if (!file) throw server.httpErrors.notFound()
     if (!file.course.equals(req.course) || !file.path.startsWith(req.priv.scope)) throw server.httpErrors.forbidden()
-    await files.updateOne({ _id }, { $set: req.body, $currentDate: { updated: true } })
+    req.body.updated = +new Date()
+    await files.updateOne({ _id }, { $set: req.body })
     return true
   })
 
