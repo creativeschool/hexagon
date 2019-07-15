@@ -6,8 +6,6 @@ const { courseSync } = require('../../schemas')
  */
 module.exports = async (server, opts) => {
   /** @type {import('mongodb').Collection} */
-  const courses = server.courses
-  /** @type {import('mongodb').Collection} */
   const userCourse = server.userCourse
 
   server.post('/sync', { schema: courseSync }, async (req) => {
@@ -19,9 +17,5 @@ module.exports = async (server, opts) => {
       { $addFields: { 'course.priv': '$priv' } },
       { $replaceRoot: { newRoot: '$course' } }
     ]).toArray()
-  })
-
-  server.get('/list', async (req) => {
-    return courses.find().toArray()
   })
 }

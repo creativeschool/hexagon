@@ -41,8 +41,4 @@ module.exports = async (server, opts) => {
     await users.updateOne({ _id: req.user }, { $set: req.body, $currentDate: { updated: true } })
     return true
   })
-
-  server.get('/list', async (req) => {
-    return users.find().toArray()
-  })
 }
