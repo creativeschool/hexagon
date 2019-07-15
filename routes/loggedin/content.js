@@ -1,5 +1,4 @@
-const { ObjectId } = require('mongodb')
-const { contentTry, contentDownload } = require('../../schemas')
+const { contentTry } = require('../../schemas')
 const StreamHash = require('../../utils/hash')
 
 /**
@@ -13,24 +12,19 @@ module.exports = async (server, opts) => {
   server.register(require('fastify-multipart'), { limits: { files: 1, fields: 0 } })
 
   server.post('/provide', async (req) => {
-    /** @type {import('stream').Readable[]} */
-    const files = await new Promise((resolve, reject) => {
-      const files = []
+    const [id, hash] = await new Promise((resolve, reject) => {
+      let count = 0
       req.multipart((field, file, filename, encoding, mime) => {
-        files.push(file)
+        count++
+        const hash = new StreamHash()
+        const stream = fs.openUploadStream('')
+        file.pipe(hash).pipe(stream).on('finish', () => resolve([stream.id, hash.hash.digest('hex')]))
       }, (err) => {
         if (err) return reject(err)
-        return resolve(files)
+        if (!count) return reject(server.httpErrors.badRequest())
       })
     })
-    if (files.length !== 1) throw server.httpErrors.badRequest()
-    const [id, hash] = await new Promise((resolve, reject) => {
-      const hash = new StreamHash()
-      const stream = fs.openUploadStream('')
-      const file = files[0]
-      file.pipe(hash).pipe(stream).on('finish', () => resolve([stream.id, hash.hash.digest('hex')]))
-    })
-    const count = await fs.find({ name: hash }).count()
+    const count = await fs.find({ filename: hash }).count()
     if (count) {
       fs.delete(id)
       throw server.httpErrors.badRequest()
@@ -40,13 +34,11 @@ module.exports = async (server, opts) => {
     }
   })
 
-  server.post('/try', { schema: contentTry }, async (req) => {
-    const _id = new ObjectId(req.headers['x-file-hash'])
-    return fs.find({ _id }).count()
+  server.get('/try', { schema: contentTry }, async (req) => {
+    return fs.find({ filename: req.headers['x-file-hash'] }).count()
   })
 
-  server.post('/download', { schema: contentDownload }, async (req) => {
-    const _id = new ObjectId(req.headers['x-file-hash'])
-    return fs.openDownloadStream(_id)
+  server.get('/download', async (req) => {
+    return fs.openDownloadStreamByName(req.headers['x-file-hash'])
   })
 }
