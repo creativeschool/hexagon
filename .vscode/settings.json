@@ -2,7 +2,7 @@
   "rest-client.environmentVariables": {
     "$shared": {},
     "local": {
-      "base": "http://localhost:3000",
+      "base": "http://localhost:3000/api",
       "token": "d491050a3747498aa24e25d74db573c077984f5d6b9478bb1d7dd811f0fa663e"
     }
   },

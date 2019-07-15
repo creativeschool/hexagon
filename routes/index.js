@@ -23,4 +23,5 @@ module.exports = async (server, opts) => {
     return token
   })
   server.register(require('./loggedin'))
+  server.register(require('./token'), { prefix: '/token' })
 }

@@ -4,7 +4,7 @@
     .register(require('fastify-sensible'))
     .register(require('./schemas/shared'))
     .register(require('./db'))
-    .register(require('./routes'))
+    .register(require('./routes'), { prefix: '/api' })
     .listen(3000)
   console.log(server.printRoutes())
 })()
