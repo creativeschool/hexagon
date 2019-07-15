@@ -9,17 +9,17 @@
     "name": {
       "type": "string"
     },
-    "created": {
-      "type": "string"
-    },
-    "updated": {
-      "type": "string"
-    },
     "tags": {
       "type": "array",
       "items": {
         "type": "string"
       }
+    },
+    "created": {
+      "type": "string"
+    },
+    "updated": {
+      "type": "string"
     },
     "priv": {
       "$ref": "http://hex.zhangzisu.cn/priv.json#"
