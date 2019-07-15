@@ -6,6 +6,9 @@
     "scope": {
       "type": "string"
     },
+    "allowver": {
+      "type": "string"
+    },
     "msg": {
       "type": "boolean"
     }
