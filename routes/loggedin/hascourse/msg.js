@@ -25,9 +25,8 @@ module.exports = async (server, opts) => {
   server.post('/update', { schema: msgUpdate }, async (req) => {
     if (!req.priv.msg) throw server.httpErrors.forbidden()
     const _id = new ObjectId(req.headers['x-msg-id'])
-    const msg = await msgs.findOne({ _id }, { _id: 0, course: 1, user: 1 })
-    if (!msg) throw server.httpErrors.notFound()
-    if (!msg.course.equals(req.course) || (!msg.user.equals(req.user))) throw server.httpErrors.forbidden()
+    const msg = await msgs.findOne({ _id, course: req.course, user: req.user }, { _id: 0 })
+    if (!msg) throw server.httpErrors.forbidden()
     req.body.updated = +new Date()
     await msgs.updateOne({ _id }, { $set: req.body })
     return true
