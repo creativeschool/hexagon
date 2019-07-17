@@ -1,6 +1,7 @@
 (async () => {
   const server = require('fastify')({ logger: true })
   await server
+    .register(require('fastify-cors'))
     .register(require('fastify-sensible'))
     .register(require('./schemas/shared'))
     .register(require('./db'))
