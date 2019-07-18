@@ -5,8 +5,10 @@
       <v-toolbar-title>教学资源开放平台管理</v-toolbar-title>
       <v-spacer />
       <v-toolbar-items>
-        <v-btn text to="/">首页</v-btn>
-        <v-btn text to="/info">同步信息</v-btn>
+        <v-btn text to="/">系统状态</v-btn>
+        <v-btn text to="/user">用户管理</v-btn>
+        <v-btn text to="/course">课程管理</v-btn>
+        <v-btn text to="/file">文件管理</v-btn>
       </v-toolbar-items>
     </v-app-bar>
     <v-content>

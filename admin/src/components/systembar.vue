@@ -18,14 +18,11 @@
         <v-btn text v-on="on" style="-webkit-app-region: no-drag">帮助</v-btn>
       </template>
       <v-list dense>
-        <v-list-item @click="openUrl('https://github.com/creativeschool/heptagon')">
+        <v-list-item @click="openUrl('https://github.com/creativeschool/hexagon/tree/master/admin')">
           <v-list-item-title>开源项目</v-list-item-title>
         </v-list-item>
-        <v-list-item @click="openUrl('https://github.com/creativeschool/heptagon/blob/master/LICENSE')">
+        <v-list-item @click="openUrl('https://github.com/creativeschool/hexagon/blob/master/LICENSE')">
           <v-list-item-title>开源许可</v-list-item-title>
-        </v-list-item>
-        <v-list-item to="/about">
-          <v-list-item-title>关于</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>

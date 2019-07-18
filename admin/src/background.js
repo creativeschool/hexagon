@@ -18,8 +18,8 @@ function createWindow () {
     webPreferences: {
       nodeIntegration: true,
       defaultFontFamily: {
-        standard: '微软雅黑 Light',
-        sansSerif: '微软雅黑 Light'
+        standard: '微软雅黑',
+        sansSerif: '微软雅黑'
       }
     },
     frame: false,
