@@ -4,6 +4,8 @@ import { isRawUser } from './ajv'
 const { randomBytes, pbkdf2Sync } = require('crypto')
 const cryptoRandomString = require('crypto-random-string')
 
+export const xlsxFilters = [{ name: '表格文件', extensions: ['xlsx'] }]
+
 export const parseUserImport = path => {
   const book = XLSX.readFile(path)
   const sheet = book.Sheets[book.SheetNames[0]]

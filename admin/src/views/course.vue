@@ -11,7 +11,6 @@
               </tr>
             </tbody>
           </v-simple-table>
-          <v-btn color="primary" class="ma-2" to="/course/import">导入</v-btn>
         </v-card-text>
         <v-overlay absolute :value="loading">
           <v-progress-circular indeterminate/>

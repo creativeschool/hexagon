@@ -3,14 +3,15 @@
     <v-flex xs12>
       <v-card>
         <v-card-text>
-          说明：
+          <strong>说明：</strong><br/>
           请先下载样表，根据样表中的说明生成表格，然后点击导入按钮进行导入。<br/>
+          样表中含有示范数据，导入时务必删除。样表中请勿包含无关数据。<br/>
           导入过程中，无法导入的行将在下面显示。<br/>
-          导入过程中，出现的错误将在下面显示。<br/>
+          导入过程中，出现的错误将结果表格中记录。<br/>
+          选择导入表格后请等待结果表格保存对话框并检查。<br/>
           重新导入后将覆盖原数据。<br/>
-          确认无误后请点击提交按钮，操作将立即提交至数据库。<br/>
           若有需要，请事先备份数据库。<br/>
-          选择导入表格后请等待结果表格保存对话框并检查。
+          确认无误后请点击提交按钮，操作将立即提交至数据库。<br/>
         </v-card-text>
         <v-card-actions>
           <v-btn color="success" outlined @click="openUrl('about:blank')">下载导入样表</v-btn>
@@ -37,7 +38,7 @@
         </v-simple-table>
         <v-overlay absolute :value="loading">
           <v-progress-circular indeterminate/>
-          {{ hint }}
+          操作中
         </v-overlay>
       </v-card>
     </v-flex>
@@ -46,7 +47,7 @@
 
 <script>
 import { openUrl, remote, currentWindow } from '@/plugins/electron'
-import { parseUserImport, saveUserImport } from '@/plugins/xlsx'
+import { parseUserImport, saveUserImport, xlsxFilters } from '@/plugins/xlsx'
 import { connection } from '../db'
 import { bus } from '../plugins/bus'
 
@@ -54,7 +55,6 @@ export default {
   name: 'userImport',
   data: () => ({
     loading: false,
-    hint: '操作中',
     data: [],
     errors: [],
     store: null
@@ -62,10 +62,10 @@ export default {
   methods: {
     openUrl,
     loadFile () {
-      remote.dialog.showOpenDialog(currentWindow, { filters: [{ name: '表格文件', extensions: ['xlsx'] }] }, paths => {
+      remote.dialog.showOpenDialog(currentWindow, { filters: xlsxFilters }, paths => {
         if (!paths || !paths.length) return
         const data = parseUserImport(paths[0])
-        remote.dialog.showSaveDialog(currentWindow, { filters: [{ name: '表格文件', extensions: ['xlsx'] }], defaultPath: paths[0] + '导出.xlsx' }, path => {
+        remote.dialog.showSaveDialog(currentWindow, { filters: xlsxFilters, defaultPath: paths[0] + '结果.xlsx' }, path => {
           if (!path) return
           saveUserImport(path, data)
           this.store = path
