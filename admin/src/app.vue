@@ -31,6 +31,7 @@
 <script>
 import { bus } from '@/plugins/bus'
 import systemBar from '@/components/systembar'
+import { remote } from './plugins/electron'
 
 export default {
   name: 'App',
@@ -52,10 +53,10 @@ export default {
   },
   mounted () {
     bus.$on('toast', msg => this.showToast(msg))
+    bus.$on('error', e => remote.dialog.showErrorBox('出现错误', e.message))
   },
   errorCaptured (err, vm, info) {
-    console.log(info)
-    this.showToast(err.message)
+    bus.$emit('error', err)
   }
 }
 </script>

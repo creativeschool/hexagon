@@ -29,7 +29,7 @@ export default {
     connection.then(ctx => {
       this.loading = false
       this.clientInfo = ctx.db.serverConfig.clientInfo
-    })
+    }).finally(() => { this.loading = false })
   }
 }
 </script>

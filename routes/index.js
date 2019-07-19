@@ -12,7 +12,7 @@ module.exports = async (server, opts) => {
   const tokens = server.tokens
 
   server.post('/login', { schema: login }, async (req) => {
-    const user = await users.findOne({ name: req.body.name }, { salt: 1, hash: 1 })
+    const user = await users.findOne({ login: req.body.login }, { salt: 1, hash: 1 })
     if (!user) throw server.httpErrors.notFound()
 
     const hash = pbkdf2Sync(req.body.pass, user.salt, 1000, 64, 'sha512').toString('hex')

@@ -1,5 +1,8 @@
 <template>
-  <v-system-bar app window dark style="-webkit-app-region: drag">
+  <v-system-bar app window dark style="-webkit-app-region: drag" :color="errored ? 'error' : ''">
+    <v-avatar size="32">
+      <img src="../../public/icon.png"/>
+    </v-avatar>
     <v-menu offset-y>
       <template v-slot:activator="{ on }">
         <v-btn text color="primary" v-on="on" style="-webkit-app-region: no-drag">文件</v-btn>
@@ -27,7 +30,7 @@
       </v-list>
     </v-menu>
     <v-spacer></v-spacer>
-    {{title}}{{ title ? ' - ' : '' }}教学资源开放平台管理
+    {{title}}{{ title ? ' - ' : '' }}教学资源开放平台管理{{ errored ? '(出现错误)' : '' }}
     <v-spacer></v-spacer>
     <v-icon icon @click="minimize" style="-webkit-app-region: no-drag">mdi-minus</v-icon>
     <v-icon icon @click="maximize" style="-webkit-app-region: no-drag">mdi-plus</v-icon>
@@ -42,7 +45,8 @@ import { bus } from '@/plugins/bus'
 export default {
   name: 'systemBar',
   data: () => ({
-    title: ''
+    title: '',
+    errored: false
   }),
   methods: {
     minimize () {
@@ -64,6 +68,7 @@ export default {
     bus.$on('title', title => {
       this.title = document.title = title
     })
+    bus.$on('error', () => { this.errored = true })
   }
 }
 </script>

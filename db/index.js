@@ -14,7 +14,7 @@ module.exports = wrapper(async (server, opts) => {
 
   const users = db.collection('users')
   server.decorate('users', users)
-  log(await users.createIndex({ name: 1 }, { unique: true }))
+  log(await users.createIndex({ login: 1 }, { unique: true }))
   log(await users.createIndex({ updated: -1 }))
 
   const courses = db.collection('courses')

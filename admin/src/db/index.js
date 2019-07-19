@@ -1,3 +1,5 @@
+import { bus } from '@/plugins/bus'
+
 const { MongoClient, GridFSBucket } = window.require('mongodb')
 
 const connect = async () => {
@@ -17,3 +19,5 @@ const connect = async () => {
 }
 
 export const connection = connect()
+
+connection.catch(e => bus.$emit('error', e))
