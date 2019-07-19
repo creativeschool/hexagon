@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "properties": {
+    "姓名": {
+      "type": "string",
+      "minLength": 1
+    },
+    "登录号": {
+      "type": "string",
+      "minLength": 1
+    },
+    "邮箱": {
+      "type": "string",
+      "pattern": "^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$",
+      "minLength": 3
+    },
+    "标签": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "姓名",
+    "登录号",
+    "邮箱",
+    "标签"
+  ]
+}

@@ -1,7 +1,7 @@
 <template>
   <v-system-bar app window dark style="-webkit-app-region: drag" :color="errored ? 'error' : ''">
     <v-avatar size="32">
-      <img src="../../public/icon.png"/>
+      <img src="@/../public/icon.png"/>
     </v-avatar>
     <v-menu offset-y>
       <template v-slot:activator="{ on }">

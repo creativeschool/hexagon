@@ -15,7 +15,10 @@
   "main": "background.js",
   "dependencies": {
     "@mdi/font": "^3.8.95",
+    "ajv": "^6.10.2",
+    "crypto-random-string": "^3.0.1",
     "material-design-icons-iconfont": "^5.0.1",
+    "mongodb": "^3.3.0-beta2",
     "vue": "^2.6.10",
     "vue-router": "^3.0.3",
     "vuetify": "^2.0.0-beta.8",

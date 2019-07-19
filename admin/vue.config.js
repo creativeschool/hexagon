@@ -5,5 +5,10 @@ module.exports = {
     plugins: [
       new VuetifyLoaderPlugin()
     ]
+  },
+  pluginOptions: {
+    electronBuilder: {
+      externals: ['mongodb']
+    }
   }
 }

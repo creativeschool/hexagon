@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <system-bar></system-bar>
-    <v-app-bar app dark>
+    <v-app-bar app>
       <v-toolbar-title>教学资源开放平台管理</v-toolbar-title>
       <v-spacer />
       <v-toolbar-items>
@@ -17,13 +17,15 @@
       </v-container>
     </v-content>
 
-    <v-footer app>
-      <!-- -->
+    <v-footer app padless>
+      <v-flex text-xs-center xs12>
+        Ver {{ version }}
+      </v-flex>
     </v-footer>
 
     <v-snackbar v-model="snackbar" bottom right :timeout="5000">
       {{ toast }}
-      <v-btn dark text @click="snackbar = false">关闭</v-btn>
+      <v-btn text @click="snackbar = false">关闭</v-btn>
     </v-snackbar>
   </v-app>
 </template>
@@ -31,7 +33,8 @@
 <script>
 import { bus } from '@/plugins/bus'
 import systemBar from '@/components/systembar'
-import { remote } from './plugins/electron'
+import { remote } from '@/plugins/electron'
+import { version } from '@/../package.json'
 
 export default {
   name: 'App',
@@ -43,7 +46,8 @@ export default {
     loggedIn: false,
     loadLog: [],
     toast: '',
-    snackbar: false
+    snackbar: false,
+    version
   }),
   methods: {
     showToast (text) {

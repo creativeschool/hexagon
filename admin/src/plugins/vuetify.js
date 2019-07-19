@@ -8,5 +8,8 @@ export default new Vuetify({
   lang: {
     locales: { zhHans },
     current: 'zhHans'
+  },
+  theme: {
+    dark: true
   }
 })

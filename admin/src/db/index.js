@@ -1,6 +1,6 @@
 import { bus } from '@/plugins/bus'
 
-const { MongoClient, GridFSBucket } = window.require('mongodb')
+const { MongoClient, GridFSBucket } = require('mongodb')
 
 const connect = async () => {
   /** @type {import('mongodb').MongoClient} */

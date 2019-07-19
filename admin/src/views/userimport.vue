@@ -13,8 +13,10 @@
         </v-card-text>
         <v-card-actions>
           <v-btn color="success" outlined @click="openUrl('about:blank')">下载导入样表</v-btn>
-          <v-btn color="primary" @click="loadFile">导入</v-btn>
+          <v-btn color="primary" @click="loadFile">{{ data.length ? `重新导入` : '导入' }}</v-btn>
           <v-btn color="error">提交</v-btn>
+          <v-spacer/>
+          <strong>已缓存{{ data.length }}条数据</strong>
         </v-card-actions>
         <v-overlay absolute :value="loading">
           <v-progress-circular indeterminate/>
@@ -27,6 +29,7 @@
 
 <script>
 import { openUrl, remote, currentWindow } from '@/plugins/electron'
+import { parseUserImport, saveUserImport } from '@/plugins/xlsx'
 
 export default {
   name: 'userImport',
@@ -34,15 +37,19 @@ export default {
     loading: false,
     hint: '操作中',
     ok: [],
-    fail: []
+    fail: [],
+    data: []
   }),
   methods: {
     openUrl,
     loadFile () {
       remote.dialog.showOpenDialog(currentWindow, { filters: [{ name: '表格文件', extensions: ['xlsx'] }] }, paths => {
         if (!paths.length) return
-        const path = paths[0]
-        console.log(path)
+        const data = parseUserImport(paths[0])
+        remote.dialog.showSaveDialog(currentWindow, { filters: [{ name: '表格文件', extensions: ['xlsx'] }], defaultPath: paths[0] + '导出.xlsx' }, path => {
+          saveUserImport(path, data)
+          this.data = data.filter(x => x.success).map(x => x.obj)
+        })
       })
     }
   }
