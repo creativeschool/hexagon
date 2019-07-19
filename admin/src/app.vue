@@ -8,6 +8,7 @@
         <v-btn text to="/">系统状态</v-btn>
         <v-btn text to="/user">用户管理</v-btn>
         <v-btn text to="/course">课程管理</v-btn>
+        <v-btn text to="/ucmap">用户课程关联</v-btn>
         <v-btn text to="/file">文件管理</v-btn>
       </v-toolbar-items>
     </v-app-bar>

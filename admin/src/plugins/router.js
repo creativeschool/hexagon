@@ -5,6 +5,8 @@ import user from '@/views/user.vue'
 import userImport from '@/views/userimport.vue'
 import course from '@/views/course.vue'
 import courseImport from '@/views/courseimport.vue'
+import file from '@/views/file.vue'
+import ucmap from '@/views/ucmap.vue'
 
 Vue.use(Router)
 
@@ -36,6 +38,16 @@ export default new Router({
       path: '/course/import',
       name: 'courseImport',
       component: courseImport
+    },
+    {
+      path: '/file',
+      name: 'file',
+      component: file
+    },
+    {
+      path: '/ucmap',
+      name: 'ucmap',
+      component: ucmap
     }
   ]
 })
