@@ -1,5 +1,5 @@
 const { pbkdf2Sync, randomBytes } = require('crypto')
-const { login } = require('../schemas')
+const { signin } = require('../schemas')
 
 /**
  * @param {import('fastify').FastifyInstance} server
@@ -11,7 +11,7 @@ module.exports = async (server, opts) => {
   /** @type {import('mongodb').Collection} */
   const tokens = server.tokens
 
-  server.post('/login', { schema: login }, async (req) => {
+  server.post('/signin', { schema: signin }, async (req) => {
     const user = await users.findOne({ login: req.body.login }, { salt: 1, hash: 1 })
     if (!user) throw server.httpErrors.notFound()
 
