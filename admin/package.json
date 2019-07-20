@@ -65,5 +65,8 @@
   "browserslist": [
     "> 1%",
     "last 2 versions"
-  ]
+  ],
+  "repository": "https://github.com/creativeschool/hexagon/tree/master/admin",
+  "author": "ZhangZisu <admin@zhangzisu.cn>",
+  "license": "Apache-2.0"
 }
