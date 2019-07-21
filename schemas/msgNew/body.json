@@ -19,6 +19,5 @@
     "content",
     "tags",
     "courseId"
-  ],
-  "additionalProperties": false
+  ]
 }

@@ -12,6 +12,5 @@
   "required": [
     "last",
     "userId"
-  ],
-  "additionalProperties": false
+  ]
 }

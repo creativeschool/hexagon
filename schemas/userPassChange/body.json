@@ -12,6 +12,5 @@
   "required": [
     "old",
     "new"
-  ],
-  "additionalProperties": false
+  ]
 }
