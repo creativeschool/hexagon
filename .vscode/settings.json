@@ -3,7 +3,7 @@
     "$shared": {},
     "local": {
       "base": "http://localhost:3000/api",
-      "token": "d491050a3747498aa24e25d74db573c077984f5d6b9478bb1d7dd811f0fa663e"
+      "token": "66dfa7c0cf81aba4b052f28cade2d48454ed1b53d452b7ba3af5cfec91a1b38e"
     }
   },
   "eslint.autoFixOnSave": true

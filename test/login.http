@@ -1,7 +1,7 @@
-POST http://localhost:3000/login HTTP/1.1
+POST {{base}}/signin HTTP/1.1
 Content-Type: application/json
 
 {
-  "name": "ZhangZisu",
+  "login": "1",
   "pass": "123456"
 }
