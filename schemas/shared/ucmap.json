@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://hex.zhangzisu.cn/ucmap.json",
+  "type": "object",
+  "properties": {
+    "_id": {
+      "type": "string"
+    },
+    "user": {
+      "type": "string"
+    },
+    "course": {
+      "type": "string"
+    },
+    "priv": {
+      "type": "object",
+      "properties": {
+        "scope": {
+          "type": "string"
+        },
+        "allowver": {
+          "type": "string"
+        },
+        "msg": {
+          "type": "boolean"
+        }
+      }
+    },
+    "created": {
+      "type": "number"
+    },
+    "updated": {
+      "type": "number"
+    }
+  }
+}

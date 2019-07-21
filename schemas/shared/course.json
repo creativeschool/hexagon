@@ -20,9 +20,6 @@
     },
     "updated": {
       "type": "number"
-    },
-    "priv": {
-      "$ref": "http://hex.zhangzisu.cn/priv.json#"
     }
   }
 }
