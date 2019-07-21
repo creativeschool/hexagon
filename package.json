@@ -1,6 +1,6 @@
 {
   "name": "hexagon",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "index.mjs",
   "repository": "git@github.com:creativeschool/hexagon.git",
   "author": "ZhangZisu <admin@zhangzisu.cn>",
