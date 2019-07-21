@@ -29,7 +29,7 @@ module.exports = async (server, opts) => {
     if (!file.path.startsWith(req.priv.scope)) throw server.httpErrors.forbidden()
     req.body.updated = +new Date()
     await files.updateOne({ _id }, { $set: req.body })
-    return true
+    return null
   })
 
   server.get('/content', { schema: fileContent }, async (req) => {

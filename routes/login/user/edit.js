@@ -25,6 +25,6 @@ module.exports = async (server, opts) => {
   server.post('/edit', { schema: userEdit }, async (req) => {
     req.body.updated = +new Date()
     await users.updateOne({ _id: req.user }, { $set: req.body })
-    return true
+    return null
   })
 }
