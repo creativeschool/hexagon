@@ -23,7 +23,7 @@ module.exports = async (server, opts) => {
 
   server.post('/update', { schema: fileUpdate }, async (req) => {
     if (!req.priv.scope || (req.body.path && !req.body.path.startsWith(req.priv.scope))) throw server.httpErrors.forbidden()
-    const _id = new ObjectId(req.headers['x-file-id'])
+    const _id = new ObjectId(req.body.fileId)
     const file = await files.findOne({ _id, course: req.course }, { _id: 0, path: 1 })
     if (!file) throw server.httpErrors.forbidden()
     if (!file.path.startsWith(req.priv.scope)) throw server.httpErrors.forbidden()
@@ -33,8 +33,8 @@ module.exports = async (server, opts) => {
   })
 
   server.get('/content', { schema: fileContent }, async (req) => {
-    const i = parseInt(req.headers['x-file-version'])
-    const _id = new ObjectId(req.headers['x-file-id'])
+    const i = req.body.versionId
+    const _id = new ObjectId(req.body.fileId)
     const file = await files.findOne({ _id, course: req.course }, { _id: 0, path: 1, versions: 1 })
     if (!file) throw server.httpErrors.forbidden()
     if (!(i >= 0 && i < file.versions.length)) throw server.httpErrors.badRequest()

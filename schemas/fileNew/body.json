@@ -30,5 +30,10 @@
     "path",
     "tags",
     "versions"
+  ],
+  "allOf": [
+    {
+      "$ref": "http://hex.zhangzisu.cn/courseCommon.json#"
+    }
   ]
 }

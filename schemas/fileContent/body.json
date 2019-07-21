@@ -2,12 +2,16 @@
   "$schema": "http://json-schema.org/draft-07/schema",
   "type": "object",
   "properties": {
-    "last": {
+    "fileId": {
+      "type": "string"
+    },
+    "versionId": {
       "type": "number"
     }
   },
   "required": [
-    "last"
+    "fileId",
+    "versionId"
   ],
   "allOf": [
     {

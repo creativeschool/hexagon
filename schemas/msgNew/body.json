@@ -15,5 +15,10 @@
   "required": [
     "content",
     "tags"
+  ],
+  "allOf": [
+    {
+      "$ref": "http://hex.zhangzisu.cn/courseCommon.json#"
+    }
   ]
 }

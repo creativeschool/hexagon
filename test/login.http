@@ -3,5 +3,6 @@ Content-Type: application/json
 
 {
   "login": "1",
-  "pass": "123456"
+  "pass": "123456",
+  "test": "11111"
 }

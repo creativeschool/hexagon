@@ -4,6 +4,16 @@ Content-Type: application/json
 x-access-token: {{token}}
 
 {
-  "id": "5d26ee56b39455e08cf1c428",
+  "courseId": "5d272ca5e3f20d3b3e9930e9",
+  "last": 0
+}
+
+### UCMap
+POST {{base}}/course/ucmap HTTP/1.1
+Content-Type: application/json
+x-access-token: {{token}}
+
+{
+  "courseId": "5d272ca5e3f20d3b3e9930e9",
   "last": 0
 }

@@ -8,5 +8,10 @@
   },
   "required": [
     "last"
+  ],
+  "allOf": [
+    {
+      "$ref": "http://hex.zhangzisu.cn/courseCommon.json#"
+    }
   ]
 }

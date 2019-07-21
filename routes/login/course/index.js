@@ -9,9 +9,7 @@ module.exports = async (server, opts) => {
   const ucmap = server.ucmap
 
   server.addHook('preHandler', async (req) => {
-    const header = req.headers['x-course-id']
-    if (!header) throw server.httpErrors.forbidden()
-    const mapper = await ucmap.findOne({ user: req.user, course: new ObjectId(header) })
+    const mapper = await ucmap.findOne({ user: req.user, course: new ObjectId(req.body.courseId) })
     if (!mapper) throw server.httpErrors.forbidden()
     req.course = mapper.course
     req.priv = mapper.priv

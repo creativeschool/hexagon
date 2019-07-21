@@ -10,6 +10,17 @@
       "items": {
         "type": "string"
       }
+    },
+    "msgId": {
+      "type": "string"
     }
-  }
+  },
+  "required": [
+    "msgId"
+  ],
+  "allOf": [
+    {
+      "$ref": "http://hex.zhangzisu.cn/courseCommon.json#"
+    }
+  ]
 }

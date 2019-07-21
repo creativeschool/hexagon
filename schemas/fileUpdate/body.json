@@ -24,6 +24,17 @@
           }
         }
       }
+    },
+    "fileId": {
+      "type": "string"
     }
-  }
+  },
+  "required": [
+    "fileId"
+  ],
+  "allOf": [
+    {
+      "$ref": "http://hex.zhangzisu.cn/courseCommon.json#"
+    }
+  ]
 }
