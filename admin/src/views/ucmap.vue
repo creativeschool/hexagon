@@ -33,7 +33,7 @@ export default {
   mounted () {
     connection.then(async ctx => {
       this.loading = false
-      this.ucmapCount = await ctx.userCourse.countDocuments()
+      this.ucmapCount = await ctx.ucmap.countDocuments()
     })
   }
 }

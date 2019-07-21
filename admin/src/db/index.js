@@ -11,11 +11,11 @@ const connect = async () => {
   const fs = new GridFSBucket(db)
   const users = db.collection('users')
   const courses = db.collection('courses')
-  const userCourse = db.collection('user_course')
+  const ucmap = db.collection('ucmap')
   const files = db.collection('files')
   const msgs = db.collection('msgs')
   const tokens = db.collection('tokens')
-  return { client, db, fs, users, courses, userCourse, files, msgs, tokens }
+  return { client, db, fs, users, courses, ucmap, files, msgs, tokens }
 }
 
 export const connection = connect()

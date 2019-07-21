@@ -7,12 +7,13 @@ module.exports = async (server, opts) => {
   const tokens = server.tokens
 
   server.addHook('preHandler', async (req) => {
-    const token = await tokens.findOne({ _id: req.headers['x-access-token'] })
+    const header = req.headers['x-access-token']
+    if (!header) throw server.httpErrors.forbidden()
+    const token = await tokens.findOne({ _id: header })
     if (!token) throw server.httpErrors.forbidden()
     req.user = token.user
   })
   server.register(require('./user'), { prefix: '/user' })
   server.register(require('./course'), { prefix: '/course' })
   server.register(require('./content'), { prefix: '/content' })
-  server.register(require('./hascourse'))
 }

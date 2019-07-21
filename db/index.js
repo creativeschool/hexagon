@@ -21,9 +21,9 @@ module.exports = wrapper(async (server, opts) => {
   server.decorate('courses', courses)
   log(await courses.createIndex({ updated: -1 }))
 
-  const userCourse = db.collection('user_course')
-  server.decorate('userCourse', userCourse)
-  log(await userCourse.createIndex({ user: 1, course: 1 }, { unique: true }))
+  const ucmap = db.collection('ucmap')
+  server.decorate('ucmap', ucmap)
+  log(await ucmap.createIndex({ user: 1, course: 1 }, { unique: true }))
 
   const files = db.collection('files')
   server.decorate('files', files)

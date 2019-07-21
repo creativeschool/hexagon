@@ -22,6 +22,6 @@ module.exports = async (server, opts) => {
     await tokens.insertOne({ _id: token, user: user._id })
     return token
   })
-  server.register(require('./loggedin'))
+  server.register(require('./login'))
   server.register(require('./token'), { prefix: '/token' })
 }

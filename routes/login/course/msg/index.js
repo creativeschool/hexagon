@@ -1,5 +1,5 @@
 const { ObjectId } = require('mongodb')
-const { msgSync, msgNew, msgUpdate } = require('../../../schemas')
+const { msgSync, msgNew, msgUpdate } = require('../../../../schemas')
 
 /**
 * @param {import('fastify').FastifyInstance} server
