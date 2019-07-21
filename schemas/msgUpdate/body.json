@@ -13,15 +13,14 @@
     },
     "msgId": {
       "type": "string"
+    },
+    "courseId": {
+      "type": "string"
     }
   },
   "required": [
-    "msgId"
-  ],
-  "allOf": [
-    {
-      "$ref": "http://hex.zhangzisu.cn/courseCommon.json#"
-    }
+    "msgId",
+    "courseId"
   ],
   "additionalProperties": false
 }

@@ -7,16 +7,15 @@
     },
     "versionId": {
       "type": "number"
+    },
+    "courseId": {
+      "type": "string"
     }
   },
   "required": [
     "fileId",
-    "versionId"
-  ],
-  "allOf": [
-    {
-      "$ref": "http://hex.zhangzisu.cn/courseCommon.json#"
-    }
+    "versionId",
+    "courseId"
   ],
   "additionalProperties": false
 }

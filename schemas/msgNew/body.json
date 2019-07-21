@@ -10,16 +10,15 @@
       "items": {
         "type": "string"
       }
+    },
+    "courseId": {
+      "type": "string"
     }
   },
   "required": [
     "content",
-    "tags"
-  ],
-  "allOf": [
-    {
-      "$ref": "http://hex.zhangzisu.cn/courseCommon.json#"
-    }
+    "tags",
+    "courseId"
   ],
   "additionalProperties": false
 }
