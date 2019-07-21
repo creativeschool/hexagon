@@ -11,9 +11,7 @@ module.exports = async (server, opts) => {
 
   // TODO: Add cache control
   server.post('/sync', { schema: userSync }, async (req) => {
-    const header = req.headers['x-user-id']
-    if (!header) throw server.httpErrors.forbidden()
-    const user = await users.findOne({ _id: new ObjectId(header) }, { hash: 0, salt: 0 })
+    const user = await users.findOne({ _id: new ObjectId(req.body.userId) }, { hash: 0, salt: 0 })
     if (!user) throw server.httpErrors.forbidden()
     return user
   })

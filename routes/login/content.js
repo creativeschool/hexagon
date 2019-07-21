@@ -1,4 +1,4 @@
-const { contentTry } = require('../../schemas')
+const { contentTry, contentDownload } = require('../../schemas')
 const StreamHash = require('../../utils/hash')
 
 /**
@@ -34,11 +34,11 @@ module.exports = async (server, opts) => {
     }
   })
 
-  server.get('/try', { schema: contentTry }, async (req) => {
-    return fs.find({ filename: req.headers['x-file-hash'] }).count()
+  server.post('/try', { schema: contentTry }, async (req) => {
+    return fs.find({ filename: req.body }).count()
   })
 
-  server.get('/download', async (req) => {
-    return fs.openDownloadStreamByName(req.headers['x-file-hash'])
+  server.post('/download', { schema: contentDownload }, async (req) => {
+    return fs.openDownloadStreamByName(req.body)
   })
 }

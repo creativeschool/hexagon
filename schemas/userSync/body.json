@@ -4,10 +4,14 @@
   "properties": {
     "last": {
       "type": "number"
+    },
+    "userId": {
+      "type": "string"
     }
   },
   "required": [
-    "last"
+    "last",
+    "userId"
   ],
   "additionalProperties": false
 }
