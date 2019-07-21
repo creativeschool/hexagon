@@ -24,14 +24,16 @@ module.exports = wrapper(async (server, opts) => {
   const ucmap = db.collection('ucmap')
   server.decorate('ucmap', ucmap)
   log(await ucmap.createIndex({ user: 1, course: 1 }, { unique: true }))
+  log(await ucmap.createIndex({ user: 1, updated: -1 }))
+  log(await ucmap.createIndex({ course: 1, updated: -1 }))
 
   const files = db.collection('files')
   server.decorate('files', files)
-  log(await files.createIndex({ updated: -1 }))
+  log(await files.createIndex({ course: 1, updated: -1 }))
 
   const msgs = db.collection('msgs')
   server.decorate('msgs', msgs)
-  log(await msgs.createIndex({ updated: -1 }))
+  log(await msgs.createIndex({ course: 1, updated: -1 }))
 
   const tokens = db.collection('tokens')
   server.decorate('tokens', tokens)
