@@ -13,5 +13,6 @@
     {
       "$ref": "http://hex.zhangzisu.cn/courseCommon.json#"
     }
-  ]
+  ],
+  "additionalProperties": false
 }

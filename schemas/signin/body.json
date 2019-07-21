@@ -12,5 +12,6 @@
   "required": [
     "login",
     "pass"
-  ]
+  ],
+  "additionalProperties": false
 }
