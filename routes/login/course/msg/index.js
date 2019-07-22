@@ -1,5 +1,5 @@
 const { ObjectId } = require('mongodb')
-const { msgSync, msgNew, msgUpdate } = require('../../../../schemas')
+const { msgSync, msgNew, msgEdit } = require('../../../../schemas')
 
 /**
 * @param {import('fastify').FastifyInstance} server
@@ -22,7 +22,7 @@ module.exports = async (server, opts) => {
     return result.insertedId
   })
 
-  server.post('/update', { schema: msgUpdate }, async (req) => {
+  server.post('/edit', { schema: msgEdit }, async (req) => {
     if (!req.priv.msg) throw server.httpErrors.forbidden()
     const _id = new ObjectId(req.body.msgId)
     const msg = await msgs.findOne({ _id, course: req.course, user: req.user }, { _id: 0 })
