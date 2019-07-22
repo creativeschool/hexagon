@@ -23,6 +23,7 @@
 
 <script>
 import { connection } from '@/db/index'
+import { bus } from '@/plugins/bus'
 
 export default {
   name: 'ucmap',
@@ -30,7 +31,8 @@ export default {
     loading: true,
     ucmapCount: NaN
   }),
-  mounted () {
+  created () {
+    bus.$emit('title', '用户课程关联')
     connection.then(async ctx => {
       this.loading = false
       this.ucmapCount = await ctx.ucmap.countDocuments()

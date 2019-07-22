@@ -20,10 +20,12 @@
     </v-flex>
     <v-flex xs12 class="mb-2">
       <v-card>
-        <v-layout row justify-start>
-          <v-btn color="error" class="ma-2" @click="loadList">查询</v-btn>
-          <v-checkbox v-model="filter" label="启用筛选"></v-checkbox>
-        </v-layout>
+        <v-card-text>
+          <v-layout row justify-start>
+            <v-btn color="error" class="ma-2" @click="loadList">查询</v-btn>
+            <v-checkbox v-model="filter" label="启用筛选"></v-checkbox>
+          </v-layout>
+        </v-card-text>
         <v-divider/>
         <v-fade-transition>
           <v-card-text v-show="filter">
@@ -58,6 +60,7 @@
 <script>
 import { connection } from '@/db/index'
 import { formatDate } from '@/plugins/formatter'
+import { bus } from '@/plugins/bus'
 
 export default {
   name: 'course',
@@ -81,7 +84,8 @@ export default {
       tags: null
     }
   }),
-  mounted () {
+  created () {
+    bus.$emit('title', '课程查询')
     connection.then(async ctx => {
       this.courseCount = await ctx.courses.countDocuments()
       this.loading = false

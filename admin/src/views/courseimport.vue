@@ -45,9 +45,9 @@
 
 <script>
 import { openUrl, remote, currentWindow } from '@/plugins/electron'
-import { connection } from '../db'
-import { bus } from '../plugins/bus'
-import { xlsxFilters } from '../plugins/xlsx'
+import { bus } from '@/plugins/bus'
+import { xlsxFilters, parseCourseImport, saveCourseImport } from '@/plugins/xlsx'
+import { connection } from '@/db'
 
 export default {
   name: 'courseImport',
@@ -62,19 +62,43 @@ export default {
     loadFile () {
       remote.dialog.showOpenDialog(currentWindow, { filters: xlsxFilters }, paths => {
         if (!paths || !paths.length) return
+        const data = parseCourseImport(paths[0])
         remote.dialog.showSaveDialog(currentWindow, { filters: xlsxFilters, defaultPath: paths[0] + '结果.xlsx' }, path => {
           if (!path) return
-          // TODO
+          saveCourseImport(path, data)
           this.store = path
+          this.data = data.filter(x => x.success).map(x => x.obj)
         })
       })
     },
     verify () {
-      //
+      this.errors = []
+      this.loading = true
+      connection.then(async ctx => {
+        for (const o of this.data) {
+          if (await ctx.courses.find({ name: o.name }).count()) {
+            this.errors.push({ name: o.name })
+          }
+        }
+        bus.$emit('toast', `验证成功！发现${this.errors.length}个冲突文档`)
+      }).finally(() => { this.loading = false })
     },
     submit () {
-      //
+      this.loading = true
+      connection.then(async ctx => {
+        const result = await ctx.courses.insertMany(this.data)
+        console.log(result)
+        bus.$emit('toast', `导入成功！共导入${result.insertedCount}个文档`)
+      }).finally(() => {
+        this.loading = false
+        this.data = []
+        this.errors = []
+        this.store = null
+      })
     }
+  },
+  created () {
+    bus.$emit('title', '课程导入')
   }
 }
 </script>

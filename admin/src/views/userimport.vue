@@ -48,8 +48,8 @@
 <script>
 import { openUrl, remote, currentWindow } from '@/plugins/electron'
 import { parseUserImport, saveUserImport, xlsxFilters } from '@/plugins/xlsx'
-import { connection } from '../db'
-import { bus } from '../plugins/bus'
+import { connection } from '@/db'
+import { bus } from '@/plugins/bus'
 
 export default {
   name: 'userImport',
@@ -77,12 +77,12 @@ export default {
       this.errors = []
       this.loading = true
       connection.then(async ctx => {
-        for (const o in this.data) {
+        for (const o of this.data) {
           if (await ctx.users.find({ login: o.login }).count()) {
             this.errors.push({ name: o.name, login: o.login })
           }
         }
-        bus.$emit('toast', `验证成功！发现${this.errors.length}条错误`)
+        bus.$emit('toast', `验证成功！发现${this.errors.length}个冲突文档`)
       }).finally(() => { this.loading = false })
     },
     submit () {

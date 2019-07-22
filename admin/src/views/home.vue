@@ -18,6 +18,7 @@
 
 <script>
 import { connection } from '@/db/index'
+import { bus } from '@/plugins/bus'
 
 export default {
   name: 'home',
@@ -25,7 +26,8 @@ export default {
     loading: true,
     clientInfo: {}
   }),
-  mounted () {
+  created () {
+    bus.$emit('title', '')
     connection.then(ctx => {
       this.loading = false
       this.clientInfo = ctx.db.serverConfig.clientInfo

@@ -20,10 +20,12 @@
     </v-flex>
     <v-flex xs12 class="mb-2">
       <v-card>
-        <v-layout row justify-start>
-          <v-btn color="error" class="ma-2" @click="loadList">查询</v-btn>
-          <v-checkbox v-model="filter" label="启用筛选"></v-checkbox>
-        </v-layout>
+        <v-card-text>
+          <v-layout row justify-start>
+            <v-btn color="error" class="ma-2" @click="loadList">查询</v-btn>
+            <v-checkbox v-model="filter" label="启用筛选"></v-checkbox>
+          </v-layout>
+        </v-card-text>
         <v-divider/>
         <v-fade-transition>
           <v-card-text v-show="filter">
@@ -49,7 +51,7 @@
             {{ item.tags.join(', ') }}
           </template>
           <template v-slot:item._actions="{ item }">
-            <v-btn icon :to="'user/edit/' + item._id">
+            <v-btn icon>
               <v-icon>mdi-pencil</v-icon>
             </v-btn>
           </template>
@@ -63,6 +65,7 @@
 import { connection } from '@/db/index'
 import { formatDate } from '@/plugins/formatter'
 import escape from 'escape-string-regexp'
+import { bus } from '@/plugins/bus'
 
 export default {
   name: 'user',
@@ -88,7 +91,8 @@ export default {
       tags: null
     }
   }),
-  mounted () {
+  created () {
+    bus.$emit('title', '用户查询')
     connection.then(async ctx => {
       this.userCount = await ctx.users.countDocuments()
       this.loading = false

@@ -52,7 +52,7 @@ export default {
       this.toast = text
     }
   },
-  mounted () {
+  created () {
     bus.$on('toast', msg => this.showToast(msg))
     bus.$on('error', e => remote.dialog.showErrorBox('出现错误', e.message))
   },

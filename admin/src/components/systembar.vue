@@ -110,7 +110,7 @@ export default {
     },
     openUrl
   },
-  mounted () {
+  created () {
     bus.$on('title', title => {
       this.title = document.title = title
     })

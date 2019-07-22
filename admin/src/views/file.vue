@@ -27,6 +27,7 @@
 
 <script>
 import { connection } from '@/db/index'
+import { bus } from '@/plugins/bus'
 
 export default {
   name: 'file',
@@ -35,7 +36,8 @@ export default {
     fileCount: NaN,
     uniqueFileCount: NaN
   }),
-  mounted () {
+  created () {
+    bus.$emit('title', '文件信息')
     connection.then(async ctx => {
       this.loading = false
       this.fileCount = await ctx.files.countDocuments()
