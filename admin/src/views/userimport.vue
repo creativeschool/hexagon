@@ -14,7 +14,7 @@
           确认无误后请点击提交按钮，操作将立即提交至数据库。<br/>
         </v-card-text>
         <v-card-actions>
-          <v-btn color="success" outlined @click="openUrl('about:blank')">下载导入样表</v-btn>
+          <v-btn color="success" outlined @click="openUrl('https://github.com/creativeschool/hexagon/raw/master/admin/example/%E7%94%A8%E6%88%B7%E5%AF%BC%E5%85%A5%E6%A0%B7%E8%A1%A8.xlsx')">下载导入样表</v-btn>
           <v-btn color="primary" outlined @click="loadFile">{{ data.length ? `重新导入` : '导入' }}</v-btn>
           <v-btn outlined @click="openUrl(store)" :disabled="!store">打开结果文件</v-btn>
           <v-btn color="primary" @click="verify">验证数据冲突</v-btn>
