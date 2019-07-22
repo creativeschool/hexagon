@@ -15,7 +15,7 @@
     </v-content>
 
     <v-footer app padless>
-      <v-flex text-xs-center xs12>
+      <v-flex text-center xs12>
         Ver {{ version }}
       </v-flex>
     </v-footer>
