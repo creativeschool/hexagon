@@ -39,7 +39,7 @@ module.exports = async (server, opts) => {
     if (!file) throw server.httpErrors.forbidden()
     if (!(i >= 0 && i < file.versions.length)) throw server.httpErrors.badRequest()
     const version = file.versions[i]
-    if (!file.path.startsWith(req.priv.scope) && !version.name.startsWith(req.priv.allowver)) throw server.httpErrors.forbidden()
+    if (!file.path.startsWith(req.priv.scope) && !version.name[0] === '!') throw server.httpErrors.forbidden()
     return version.hash
   })
 
