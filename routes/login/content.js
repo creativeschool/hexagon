@@ -1,4 +1,4 @@
-const { contentTry, contentDownload } = require('../../schemas')
+const { contentProvide, contentTry, contentDownload } = require('../../schemas')
 const StreamHash = require('../../utils/hash')
 
 /**
@@ -11,7 +11,7 @@ module.exports = async (server, opts) => {
 
   server.register(require('fastify-multipart'), { limits: { files: 1, fields: 0 } })
 
-  server.post('/provide', async (req) => {
+  server.post('/provide', { schema: contentProvide }, async (req) => {
     const [id, hash] = await new Promise((resolve, reject) => {
       let count = 0
       req.multipart((field, file, filename, encoding, mime) => {
