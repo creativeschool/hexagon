@@ -1,4 +1,4 @@
-const { contentProvide, contentTry, contentDownload } = require('../../schemas')
+const { contentProvide, contentTry } = require('../../schemas')
 const StreamHash = require('../../utils/hash')
 
 /**
@@ -36,9 +36,5 @@ module.exports = async (server, opts) => {
 
   server.post('/try', { schema: contentTry }, async (req) => {
     return fs.find({ filename: req.body }).count()
-  })
-
-  server.post('/download', { schema: contentDownload }, async (req) => {
-    return fs.openDownloadStreamByName(req.body)
   })
 }

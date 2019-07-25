@@ -20,6 +20,9 @@
           "name": {
             "type": "string"
           },
+          "hash": {
+            "type": "string"
+          },
           "type": {
             "type": "string"
           }

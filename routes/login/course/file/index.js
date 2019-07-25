@@ -8,6 +8,8 @@ const { fileSync, fileNew, fileEdit, fileContent } = require('../../../../schema
 module.exports = async (server, opts) => {
   /** @type {import('mongodb').Collection} */
   const files = server.files
+  /** @type {import('mongodb').GridFSBucket} */
+  const fs = server.fs
 
   server.post('/sync', { schema: fileSync }, async (req) => {
     return files.find({ course: req.course, updated: { $gt: req.body.last } }).toArray()
@@ -40,7 +42,7 @@ module.exports = async (server, opts) => {
     if (!(i >= 0 && i < file.versions.length)) throw server.httpErrors.badRequest()
     const version = file.versions[i]
     if (!file.path.startsWith(req.priv.scope) && !version.name[0] === '!') throw server.httpErrors.forbidden()
-    return version.hash
+    return fs.openDownloadStreamByName(version.hash)
   })
 
   // @todo Cannot sync problems. 7/14/2019
