@@ -23,7 +23,7 @@ module.exports = async (server, opts) => {
     return result.insertedId
   })
 
-  server.post('/update', { schema: fileEdit }, async (req) => {
+  server.post('/edit', { schema: fileEdit }, async (req) => {
     if (!req.priv.scope || (req.body.path && !req.body.path.startsWith(req.priv.scope))) throw server.httpErrors.forbidden()
     const _id = new ObjectId(req.body.fileId)
     const file = await files.findOne({ _id, course: req.course }, { _id: 0, path: 1 })

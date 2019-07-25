@@ -1,4 +1,5 @@
 (async () => {
+  const { version } = require('./package.json')
   const server = require('fastify')()
   await server
     .register(require('fastify-cors'))
@@ -7,5 +8,5 @@
     .register(require('./db'))
     .register(require('./routes'), { prefix: '/api' })
     .listen(3000)
-  console.log(require('chalk').blue('MAIN') + '\t' + '⬡ Hexagon ⬡ started')
+  console.log(`${require('chalk').blue('MAIN')}\t⬡ Hexagon ${version} ⬡ started`)
 })()
