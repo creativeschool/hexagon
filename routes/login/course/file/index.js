@@ -1,4 +1,6 @@
 const { ObjectId } = require('mongodb')
+const { randomBytes } = require('crypto')
+const { promisify } = require('util')
 const { fileSync, fileNew, fileEdit, fileContent } = require('../../../../schemas')
 
 /**
@@ -8,8 +10,9 @@ const { fileSync, fileNew, fileEdit, fileContent } = require('../../../../schema
 module.exports = async (server, opts) => {
   /** @type {import('mongodb').Collection} */
   const files = server.files
-  /** @type {import('mongodb').GridFSBucket} */
-  const fs = server.fs
+  /** @type {import('redis').RedisClient} */
+  const redis = server.redis
+  const setAsync = promisify(redis.set).bind(redis)
 
   server.post('/sync', { schema: fileSync }, async (req) => {
     return files.find({ course: req.course, updated: { $gt: req.body.last } }).toArray()
@@ -34,7 +37,7 @@ module.exports = async (server, opts) => {
     return null
   })
 
-  server.get('/content', { schema: fileContent }, async (req) => {
+  server.post('/content', { schema: fileContent }, async (req) => {
     const i = req.body.versionId
     const _id = new ObjectId(req.body.fileId)
     const file = await files.findOne({ _id, course: req.course }, { _id: 0, path: 1, versions: 1 })
@@ -42,13 +45,8 @@ module.exports = async (server, opts) => {
     if (!(i >= 0 && i < file.versions.length)) throw server.httpErrors.badRequest()
     const version = file.versions[i]
     if (!file.path.startsWith(req.priv.scope) && !version.name[0] === '!') throw server.httpErrors.forbidden()
-    return fs.openDownloadStreamByName(version.hash)
+    const token = randomBytes(32).toString('hex')
+    await setAsync(token, version.hash, 'EX', 60 * 60) // Token expires in 1 hour
+    return token
   })
-
-  // @todo Cannot sync problems. 7/14/2019
-  // For the same reason, message cannot be remove too.
-  // server.post('/remove', { schema: fileRemove }, async (req) => {
-  //   await files.deleteOne({ _id: await fileScope(req) })
-  //   return true
-  // })
 }

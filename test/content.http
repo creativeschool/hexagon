@@ -1,6 +1,4 @@
-### Download
-POST {{base}}/content/download HTTP/1.1
-Content-Type: application/json
-x-access-token: {{token}}
+@DT=c85dd55c77ec6eccb25b03fa89b039c875ba0e99ba12b0128d81fd4d7b65b136
 
-"e0db49df39ac26ecfa1ded3095c66fc679062568"
+### Download
+GET {{base}}/download/{{DT}} HTTP/1.1

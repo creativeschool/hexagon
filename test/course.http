@@ -18,3 +18,14 @@ x-access-token: {{token}}
   "courseId": "5d272ca5e3f20d3b3e9930e9",
   "last": 0
 }
+
+### File Content
+POST {{base}}/course/file/content HTTP/1.1
+Content-Type: application/json
+x-access-token: {{token}}
+
+{
+  "courseId": "5d272ca5e3f20d3b3e9930e9",
+  "fileId": "5d2b2c6b07264c35acef622a",
+  "versionId": 0
+}

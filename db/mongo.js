@@ -6,7 +6,6 @@ module.exports = wrapper(async (server, opts) => {
   const client = new MongoClient('mongodb://localhost:27017/hex', { useNewUrlParser: true })
   await client.connect()
   const db = client.db('hex')
-  server.decorate('db', db)
   const fs = new GridFSBucket(db)
   server.decorate('fs', fs)
 

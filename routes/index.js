@@ -24,4 +24,5 @@ module.exports = async (server, opts) => {
   })
   server.register(require('./login'))
   server.register(require('./token'), { prefix: '/token' })
+  server.register(require('./download'), { prefix: '/download' })
 }
