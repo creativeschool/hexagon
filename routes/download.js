@@ -11,9 +11,10 @@ module.exports = async (server, opts) => {
   const redis = server.redis
   const getAsync = promisify(redis.get).bind(redis)
 
-  server.get('/:token', async (req) => {
+  server.get('/:token', async (req, res) => {
     const hash = await getAsync(req.params.token)
     if (!hash) throw server.httpErrors.forbidden()
+    if (req.query.filename) res.header('Content-Disposition', 'attachment;filename=' + encodeURIComponent(req.query.filename))
     return fs.openDownloadStreamByName(hash)
   })
 }

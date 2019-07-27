@@ -10,5 +10,4 @@
     .register(require('./routes'), { prefix: '/api' })
     .listen(3000)
   console.log(`${require('chalk').blue('MAIN')}\t⬡ Hexagon ${version} ⬡ started`)
-  console.log(server.printRoutes())
 })()
