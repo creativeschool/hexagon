@@ -8,6 +8,6 @@
     .register(require('./db/mongo'))
     .register(require('./db/redis'))
     .register(require('./routes'), { prefix: '/api' })
-    .listen(3000)
+    .listen(3000, '::')
   console.log(`${require('chalk').blue('MAIN')}\t⬡ Hexagon ${version} ⬡ started`)
 })()
