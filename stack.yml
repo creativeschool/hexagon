@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  mongo:
+    image: mongo
+    restart: always
+
+  redis:
+    image: redis
+    restart: always
+
+  hexagon:
+    image: zhangzisu/hexagon
+    restart: always
+    ports:
+      - 3000
+    environment:
+      MONGO_URL: mongodb://mongo:27017/hex
+      REDIS_URL: redis://redis

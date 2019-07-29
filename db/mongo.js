@@ -3,7 +3,7 @@ const { MongoClient, GridFSBucket } = require('mongodb')
 const chalk = require('chalk')
 
 module.exports = wrapper(async (server, opts) => {
-  const client = new MongoClient('mongodb://localhost:27017/hex', { useNewUrlParser: true })
+  const client = new MongoClient(process.env.MONGO_URL, { useNewUrlParser: true })
   await client.connect()
   const db = client.db('hex')
   const fs = new GridFSBucket(db)
