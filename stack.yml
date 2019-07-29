@@ -2,15 +2,15 @@ version: '3.1'
 
 services:
   mongo:
-    image: mongo
+    image: mongo:latest
     restart: always
 
   redis:
-    image: redis
+    image: redis:latest
     restart: always
 
   hexagon:
-    image: zhangzisu/hexagon
+    image: zhangzisu/hexagon:latest
     restart: always
     ports:
       - 3000:3000
