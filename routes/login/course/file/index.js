@@ -12,6 +12,7 @@ module.exports = async (server, opts) => {
   const files = server.files
   /** @type {import('redis').RedisClient} */
   const redis = server.redis
+  const getAsync = promisify(redis.get).bind(redis)
   const setAsync = promisify(redis.set).bind(redis)
 
   server.post('/sync', { schema: fileSync }, async (req) => {
@@ -45,8 +46,12 @@ module.exports = async (server, opts) => {
     if (!(i >= 0 && i < file.versions.length)) throw server.httpErrors.badRequest()
     const version = file.versions[i]
     if (!file.path.startsWith(req.priv.scope) && !version.name[0] === '!') throw server.httpErrors.forbidden()
-    const token = randomBytes(32).toString('hex')
-    await setAsync(token, version.hash, 'EX', 60 * 60) // Token expires in 1 hour
+    let token = await getAsync(version.hash)
+    if (!token) {
+      token = randomBytes(32).toString('hex')
+      await setAsync(version.hash, token, 'EX', 24 * 60 * 60) // Hash cache expires in 1 day
+      await setAsync(token, version.hash, 'EX', 48 * 60 * 60) // Token cache expires in 2 day
+    }
     return token
   })
 }

@@ -37,4 +37,8 @@ module.exports = wrapper(async (server, opts) => {
 
   const tokens = db.collection('tokens')
   server.decorate('tokens', tokens)
+
+  const notices = db.collection('notices')
+  server.decorate('notices', notices)
+  log(await notices.createIndex({ updated: -1 }))
 })

@@ -1,0 +1,18 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://hex.zhangzisu.cn/notice.json",
+  "properties": {
+    "_id": {
+      "type": "string"
+    },
+    "content": {
+      "type": "string"
+    },
+    "created": {
+      "type": "number"
+    },
+    "updated": {
+      "type": "number"
+    }
+  }
+}
