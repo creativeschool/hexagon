@@ -1,4 +1,4 @@
-const server = require('fastify')()
+const server = require('fastify')({ logger: true })
   .register(require('fastify-cors'))
   .register(require('fastify-sensible'))
   .register(require('./schemas/shared'))

@@ -9,7 +9,9 @@ module.exports = async (server, opts) => {
   const tokens = server.tokens
 
   server.get('/detail', { tokenDetail }, async req => {
-    const token = await tokens.findOne({ _id: req.headers['x-access-token'] })
+    const value = req.headers['x-access-token']
+    if (!value) throw server.httpErrors.forbidden()
+    const token = await tokens.findOne({ value })
     if (!token) throw server.httpErrors.forbidden()
     return token
   })

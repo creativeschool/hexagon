@@ -17,9 +17,9 @@ module.exports = async (server, opts) => {
     if (hash !== user.hash) throw server.httpErrors.forbidden()
     await users.updateOne({ _id: req.user }, { $set: { hash: pbkdf2Sync(req.body.new, user.salt, 1000, 64, 'sha512').toString('hex') } })
     await tokens.deleteMany({ user: req.user })
-    const token = randomBytes(32).toString('hex')
-    await tokens.insertOne({ _id: token, user: req.user })
-    return token
+    const value = randomBytes(32).toString('hex')
+    await tokens.insertOne({ value, user: req.user })
+    return value
   })
 
   server.post('/edit', { schema: userEdit }, async req => {

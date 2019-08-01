@@ -7,9 +7,9 @@ module.exports = async (server, opts) => {
   const tokens = server.tokens
 
   server.addHook('preHandler', async req => {
-    const header = req.headers['x-access-token']
-    if (!header) throw server.httpErrors.forbidden()
-    const token = await tokens.findOne({ _id: header })
+    const value = req.headers['x-access-token']
+    if (!value) throw server.httpErrors.forbidden()
+    const token = await tokens.findOne({ value })
     if (!token) throw server.httpErrors.forbidden()
     req.user = token.user
   })
