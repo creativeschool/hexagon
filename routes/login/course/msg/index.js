@@ -9,11 +9,11 @@ module.exports = async (server, opts) => {
   /** @type {import('mongodb').Collection} */
   const msgs = server.msgs
 
-  server.post('/sync', { schema: msgSync }, async (req) => {
+  server.post('/sync', { schema: msgSync }, async req => {
     return msgs.find({ course: req.course, updated: { $gt: req.body.last } }).toArray()
   })
 
-  server.post('/new', { schema: msgNew }, async (req) => {
+  server.post('/new', { schema: msgNew }, async req => {
     if (!req.priv.msg) throw server.httpErrors.forbidden()
     req.body.course = req.course
     req.body.user = req.user
@@ -22,7 +22,7 @@ module.exports = async (server, opts) => {
     return result.insertedId
   })
 
-  server.post('/edit', { schema: msgEdit }, async (req) => {
+  server.post('/edit', { schema: msgEdit }, async req => {
     if (!req.priv.msg) throw server.httpErrors.forbidden()
     const _id = new ObjectId(req.body.msgId)
     const msg = await msgs.findOne({ _id, course: req.course, user: req.user }, { _id: 0 })

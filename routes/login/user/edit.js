@@ -11,7 +11,7 @@ module.exports = async (server, opts) => {
   /** @type {import('mongodb').Collection} */
   const tokens = server.tokens
 
-  server.post('/pass', { schema: userPassChange }, async (req) => {
+  server.post('/pass', { schema: userPassChange }, async req => {
     const user = await users.findOne({ _id: req.user }, { _id: 0, hash: 1, salt: 1 })
     const hash = pbkdf2Sync(req.body.old, user.salt, 1000, 64, 'sha512').toString('hex')
     if (hash !== user.hash) throw server.httpErrors.forbidden()
@@ -22,7 +22,7 @@ module.exports = async (server, opts) => {
     return token
   })
 
-  server.post('/edit', { schema: userEdit }, async (req) => {
+  server.post('/edit', { schema: userEdit }, async req => {
     req.body.updated = +new Date()
     await users.updateOne({ _id: req.user }, { $set: req.body })
     return null

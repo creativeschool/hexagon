@@ -11,7 +11,7 @@ module.exports = async (server, opts) => {
   /** @type {import('mongodb').Collection} */
   const tokens = server.tokens
 
-  server.post('/common', { schema: signin }, async (req) => {
+  server.post('/common', { schema: signin }, async req => {
     const user = await users.findOne({ login: req.body.login }, { salt: 1, hash: 1 })
     if (!user) throw server.httpErrors.notFound()
 

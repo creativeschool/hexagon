@@ -8,7 +8,7 @@ module.exports = async (server, opts) => {
   /** @type {import('mongodb').Collection} */
   const ucmap = server.ucmap
 
-  server.post('/ucmap', { schema: userUcmap }, async (req) => {
+  server.post('/ucmap', { schema: userUcmap }, async req => {
     return ucmap.find({ user: req.user, updated: { $gt: req.body.last } }).toArray()
   })
 }

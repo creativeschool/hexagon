@@ -15,11 +15,11 @@ module.exports = async (server, opts) => {
   const getAsync = promisify(redis.get).bind(redis)
   const setAsync = promisify(redis.set).bind(redis)
 
-  server.post('/sync', { schema: fileSync }, async (req) => {
+  server.post('/sync', { schema: fileSync }, async req => {
     return files.find({ course: req.course, updated: { $gt: req.body.last } }).toArray()
   })
 
-  server.post('/new', { schema: fileNew }, async (req) => {
+  server.post('/new', { schema: fileNew }, async req => {
     if (!req.priv.scope || !req.body.path.startsWith(req.priv.scope)) throw server.httpErrors.forbidden()
     req.body.course = req.course
     req.body.created = req.body.updated = +new Date()
@@ -27,7 +27,7 @@ module.exports = async (server, opts) => {
     return result.insertedId
   })
 
-  server.post('/edit', { schema: fileEdit }, async (req) => {
+  server.post('/edit', { schema: fileEdit }, async req => {
     if (!req.priv.scope || (req.body.path && !req.body.path.startsWith(req.priv.scope))) throw server.httpErrors.forbidden()
     const _id = new ObjectId(req.body.fileId)
     const file = await files.findOne({ _id, course: req.course }, { _id: 0, path: 1 })
@@ -38,7 +38,7 @@ module.exports = async (server, opts) => {
     return null
   })
 
-  server.post('/content', { schema: fileContent }, async (req) => {
+  server.post('/content', { schema: fileContent }, async req => {
     const i = req.body.versionId
     const _id = new ObjectId(req.body.fileId)
     const file = await files.findOne({ _id, course: req.course }, { _id: 0, path: 1, versions: 1 })

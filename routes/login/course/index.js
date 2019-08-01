@@ -8,7 +8,7 @@ module.exports = async (server, opts) => {
   /** @type {import('mongodb').Collection} */
   const ucmap = server.ucmap
 
-  server.addHook('preHandler', async (req) => {
+  server.addHook('preHandler', async req => {
     const mapper = await ucmap.findOne({ user: req.user, course: new ObjectId(req.body.courseId) })
     if (!mapper) throw server.httpErrors.forbidden()
     req.course = mapper.course
