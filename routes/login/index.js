@@ -16,4 +16,5 @@ module.exports = async (server, opts) => {
   server.register(require('./user'), { prefix: '/user' })
   server.register(require('./course'), { prefix: '/course' })
   server.register(require('./content'), { prefix: '/content' })
+  server.register(require('./notice'), { prefix: '/notice' })
 }
