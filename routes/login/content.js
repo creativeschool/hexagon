@@ -21,13 +21,13 @@ module.exports = async (server, opts) => {
         file.pipe(hash).pipe(stream).on('finish', () => resolve([stream.id, hash.hash.digest('hex')]))
       }, err => {
         if (err) return reject(err)
-        if (!count) return reject(server.httpErrors.badRequest())
+        if (!count) return reject(server.httpErrors.badRequest('No file uploaded'))
       })
     })
     const count = await fs.find({ filename: hash }).count()
     if (count) {
       fs.delete(id)
-      throw server.httpErrors.badRequest()
+      throw server.httpErrors.badRequest('Already exists')
     } else {
       fs.rename(id, hash)
       return hash

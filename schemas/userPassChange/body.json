@@ -12,5 +12,6 @@
   "required": [
     "old",
     "new"
-  ]
+  ],
+  "additionalItems": false
 }

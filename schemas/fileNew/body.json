@@ -27,7 +27,13 @@
           "hash": {
             "type": "string"
           }
-        }
+        },
+        "required": [
+          "name",
+          "type",
+          "hash"
+        ],
+        "additionalItems": false
       }
     },
     "courseId": {

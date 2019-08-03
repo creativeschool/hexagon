@@ -21,5 +21,6 @@
     "content",
     "tags",
     "courseId"
-  ]
+  ],
+  "additionalItems": false
 }

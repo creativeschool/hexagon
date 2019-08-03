@@ -28,7 +28,8 @@
           "hash": {
             "type": "string"
           }
-        }
+        },
+        "additionalItems": false
       }
     },
     "fileId": {
@@ -41,5 +42,6 @@
   "required": [
     "fileId",
     "courseId"
-  ]
+  ],
+  "additionalItems": false
 }

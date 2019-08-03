@@ -22,5 +22,6 @@
   "required": [
     "msgId",
     "courseId"
-  ]
+  ],
+  "additionalItems": false
 }

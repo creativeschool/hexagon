@@ -16,5 +16,6 @@
     "fileId",
     "versionId",
     "courseId"
-  ]
+  ],
+  "additionalItems": false
 }

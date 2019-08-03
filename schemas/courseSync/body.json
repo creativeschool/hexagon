@@ -12,5 +12,6 @@
   "required": [
     "last",
     "courseId"
-  ]
+  ],
+  "additionalItems": false
 }
