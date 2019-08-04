@@ -36,6 +36,12 @@
         },
         "singleLogin": {
           "type": "boolean"
+        },
+        "viewerHighRes": {
+          "type": "boolean"
+        },
+        "viewerOfflineOff": {
+          "type": "boolean"
         }
       }
     }
