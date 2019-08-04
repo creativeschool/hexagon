@@ -27,6 +27,17 @@
     },
     "updated": {
       "type": "number"
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "stickyLogin": {
+          "type": "number"
+        },
+        "singleLogin": {
+          "type": "boolean"
+        }
+      }
     }
   }
 }
