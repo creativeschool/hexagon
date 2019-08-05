@@ -17,7 +17,8 @@ module.exports = async (server, opts) => {
     if (!user) throw server.httpErrors.notFound()
 
     const now = +new Date()
-    const meta = user.meta || defaultUserMeta
+    // DO NOT use nested prop in meta
+    const meta = Object.assign({}, defaultUserMeta, user.meta)
 
     if (meta.restrictBefore && now >= meta.restrictBefore) {
       throw server.httpErrors.forbidden('Account expired')
