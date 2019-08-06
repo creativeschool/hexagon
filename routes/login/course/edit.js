@@ -10,7 +10,11 @@ module.exports = async (server, opts) => {
 
   server.post('/meta', { schema: courseMetaEdit }, async req => {
     if (!req.priv.meta) throw server.httpErrors.forbidden()
-    await courses.updateOne({ _id: req.course }, { $set: { meta: req.body.meta } })
+    const delta = {
+      meta: req.body.meta,
+      updated: +new Date()
+    }
+    await courses.updateOne({ _id: req.course }, { $set: delta })
     return null
   })
 }
