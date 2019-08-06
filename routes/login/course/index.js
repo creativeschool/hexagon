@@ -17,6 +17,7 @@ module.exports = async (server, opts) => {
 
   server.register(require('./sync'))
   server.register(require('./ucmap'))
+  server.register(require('./edit'))
   server.register(require('./file'), { prefix: '/file' })
   server.register(require('./msg'), { prefix: '/msg' })
 }

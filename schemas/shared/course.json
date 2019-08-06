@@ -21,6 +21,14 @@
     },
     "updated": {
       "type": "number"
+    },
+    "meta": {
+      "type": "object",
+      "properties": {
+        "viewerForceEnable": {
+          "type": "boolean"
+        }
+      }
     }
   }
 }
