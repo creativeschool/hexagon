@@ -24,11 +24,12 @@ module.exports = async (server, opts) => {
 
   server.post('/edit', { schema: msgEdit }, async req => {
     if (!req.priv.msg) throw server.httpErrors.forbidden()
-    const _id = new ObjectId(req.body.msgId)
+    const { msgId, delta } = req.body
+    const _id = new ObjectId(msgId)
     const msg = await msgs.findOne({ _id, course: req.course, user: req.user }, { _id: 0 })
     if (!msg) throw server.httpErrors.forbidden()
-    req.body.updated = +new Date()
-    await msgs.updateOne({ _id }, { $set: req.body })
+    delta.updated = +new Date()
+    await msgs.updateOne({ _id }, { $set: delta })
     return null
   })
 }

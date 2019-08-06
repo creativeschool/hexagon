@@ -1,12 +1,23 @@
 ### Sync
-POST {{base}}/course/sync HTTP/1.1
+POST {{base}}/login/course/sync HTTP/1.1
 Content-Type: application/json
 x-access-token: {{token}}
 
 {
   "courseId": "5d272ca5e3f20d3b3e9930e9",
-  "last": 0,
-  "DDDD": 1
+  "last": 0
+}
+
+### Edit meta
+POST {{base}}/login/course/meta HTTP/1.1
+Content-Type: application/json
+x-access-token: {{token}}
+
+{
+  "courseId": "5d272ca5e3f20d3b3e9930e9",
+  "meta": {
+    "viewerForceEnable": true
+  }
 }
 
 ### UCMap

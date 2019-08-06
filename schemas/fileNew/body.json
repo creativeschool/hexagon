@@ -16,24 +16,7 @@
     "versions": {
       "type": "array",
       "items": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "type": {
-            "type": "string"
-          },
-          "hash": {
-            "type": "string"
-          }
-        },
-        "required": [
-          "name",
-          "type",
-          "hash"
-        ],
-        "additionalItems": false
+        "$ref": "http://hex.zhangzisu.cn/fileversion.json#"
       }
     },
     "courseId": {

@@ -23,12 +23,7 @@
       "type": "number"
     },
     "meta": {
-      "type": "object",
-      "properties": {
-        "viewerForceEnable": {
-          "type": "boolean"
-        }
-      }
+      "$ref": "http://hex.zhangzisu.cn/coursemeta.json#"
     }
   }
 }

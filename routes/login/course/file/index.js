@@ -28,13 +28,14 @@ module.exports = async (server, opts) => {
   })
 
   server.post('/edit', { schema: fileEdit }, async req => {
-    if (!req.priv.scope || (req.body.path && !req.body.path.startsWith(req.priv.scope))) throw server.httpErrors.forbidden()
-    const _id = new ObjectId(req.body.fileId)
+    const { fileId, delta } = req.body
+    if (!req.priv.scope || (delta.path && !delta.path.startsWith(req.priv.scope))) throw server.httpErrors.forbidden()
+    const _id = new ObjectId(fileId)
     const file = await files.findOne({ _id, course: req.course }, { _id: 0, path: 1 })
     if (!file) throw server.httpErrors.forbidden()
     if (!file.path.startsWith(req.priv.scope)) throw server.httpErrors.forbidden()
-    req.body.updated = +new Date()
-    await files.updateOne({ _id }, { $set: req.body })
+    delta.updated = +new Date()
+    await files.updateOne({ _id }, { $set: delta })
     return null
   })
 

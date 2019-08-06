@@ -2,34 +2,26 @@
   "$schema": "http://json-schema.org/draft-07/schema",
   "type": "object",
   "properties": {
-    "path": {
-      "type": "string",
-      "minLength": 1
-    },
-    "tags": {
-      "type": "array",
-      "items": {
-        "type": "string",
-        "minLength": 1
-      }
-    },
-    "versions": {
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {
-          "name": {
+    "delta": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "tags": {
+          "type": "array",
+          "items": {
             "type": "string",
             "minLength": 1
-          },
-          "type": {
-            "type": "string"
-          },
-          "hash": {
-            "type": "string"
           }
         },
-        "additionalItems": false
+        "versions": {
+          "type": "array",
+          "items": {
+            "$ref": "http://hex.zhangzisu.cn/fileversion.json#"
+          }
+        }
       }
     },
     "fileId": {
@@ -40,6 +32,7 @@
     }
   },
   "required": [
+    "delta",
     "fileId",
     "courseId"
   ],
