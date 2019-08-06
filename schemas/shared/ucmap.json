@@ -23,6 +23,9 @@
         },
         "msg": {
           "type": "boolean"
+        },
+        "meta": {
+          "type": "boolean"
         }
       }
     },
