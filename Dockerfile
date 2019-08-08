@@ -1,6 +1,6 @@
 FROM node:12
 
-WORKDIR /opt/zhangzisu/createschool
+WORKDIR /opt/zhangzisu/opensource
 
 ENV NODE_ENV=production
 
