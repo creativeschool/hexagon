@@ -6,7 +6,7 @@
   "author": "ZhangZisu <admin@zhangzisu.cn>",
   "license": "Apache-2.0",
   "devDependencies": {
-    "@types/mongodb": "^3.1.31",
+    "@types/mongodb": "^3.3.6",
     "@types/node": "^12.7.1",
     "eslint": "^6.1.0",
     "eslint-config-standard": "^13.0.1",
