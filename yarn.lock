@@ -25,10 +25,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/mongodb@^3.1.31":
-  version "3.1.31"
-  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.1.31.tgz#60565e7355b928df28b26be304e3f7c792cb5078"
-  integrity sha512-0l6z2ARkyAkgdtzF/Hqx3cRoADDQK/7VHvESikhLXjanSpIo1EJt2JL4NpM+jIqLWzn5P1IxRBSIIOqs5ZKBOQ==
+"@types/mongodb@^3.3.15":
+  version "3.3.15"
+  resolved "https://registry.yarnpkg.com/@types/mongodb/-/mongodb-3.3.15.tgz#f8b80a7a1f42fa90f58a1273df80f0e5764e3d25"
+  integrity sha512-q2dL0VEdFdE9iS0xrTP0NSgJJBFH4hBvt3beglCwU3qMWrz7dCuu/CrRjPB4+R8jLjCi/Gik2Mkd+lU0sYsZgQ==
   dependencies:
     "@types/bson" "*"
     "@types/node" "*"
